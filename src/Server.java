@@ -1,29 +1,54 @@
-import java.io.PrintWriter;
+import messages.Message;
+import network.ChatSocket;
+
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ArrayBlockingQueue;
 
-public class Server {
+public class Server implements Runnable {
 
     int port;
+    boolean running;
+    List<ChatSocket> sockets = new ArrayList<ChatSocket>();
+    ArrayBlockingQueue<Message> messages = new ArrayBlockingQueue<Message>(50);
 
     public Server(int port) {
         this.port = port;
     }
     public void listen() {
-        String data = "Toobie ornaught toobie";
-        try {
-            ServerSocket srvr = new ServerSocket(this.port);
-            Socket skt = srvr.accept();
-            System.out.print("Server has connected!\n");
-            PrintWriter out = new PrintWriter(skt.getOutputStream(), true);
-            System.out.print("Sending string: '" + data + "'\n");
-            out.print(data);
-            out.close();
-            skt.close();
-            srvr.close();
+        running = true;
+        try (ServerSocket srvr = new ServerSocket(this.port)) {
+            while(running) {
+                Socket skt = srvr.accept();
+                ChatSocket chatSkt = new ChatSocket(sockets.size(), skt, messages);
+                Thread client = new Thread(chatSkt);
+                client.start();
+                sockets.add(chatSkt);
+            }
+        } catch (IOException e) {
+            // TODO: log the exception
         }
-        catch(Exception e) {
-            System.out.print("Whoops! It didn't work!\n");
+
+
+    }
+
+    @Override
+    public void run() {
+        while(running) {
+            try {
+                Message m = messages.take();
+                for(ChatSocket skt : this.sockets) {
+                    skt.send(m);
+                }
+            } catch (InterruptedException e) {
+                // TODO: log exception and graceful exit?
+                throw new RuntimeException(e);
+            }
+
         }
     }
 }
