@@ -9,6 +9,6 @@ public class ChatClient {
         Thread t = new Thread(c);
         c.connect(6554);
         t.start();
-        c.send(new Message("Client message!" + new Random().nextInt(1024) + "\n", 0));
+        c.send(new Message("Client message!" + new Random().nextInt(1024), 0));
     }
 }
