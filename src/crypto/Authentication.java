@@ -1,13 +1,13 @@
 package crypto;
 
 public class Authentication {
-    String password = "This is a private channel";
+    static String password = "This is a private channel";
 
-    public boolean checkAuthenticationToken(String token) {
+    public static boolean checkAuthenticationToken(String token) {
         return token.equals(password);
     }
 
-    public String getAuthenticationToken() {
+    public static String getAuthenticationToken() {
         return password;
     }
 }

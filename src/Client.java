@@ -1,3 +1,4 @@
+import crypto.Authentication;
 import messages.Message;
 import network.ChatSocket;
 
@@ -27,6 +28,10 @@ public class Client implements Runnable{
         catch(Exception e) {
             System.out.print("Whoops! It didn't work!\n");
         }
+    }
+
+    public void authenticate() {
+        send(new Message(Authentication.getAuthenticationToken(), null));
     }
 
     public void send(Message m) {

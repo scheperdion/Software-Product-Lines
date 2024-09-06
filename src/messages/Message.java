@@ -1,19 +1,21 @@
 package messages;
 
+import network.ChatSocket;
+
 public class Message {
     private final String str;
-    private final int idFrom;
+    private final ChatSocket skt;
 
-    public Message(String str, int idFrom) {
+    public Message(String str, ChatSocket skt) {
         this.str = str;
-        this.idFrom = idFrom;
+        this.skt = skt;
     }
 
     public String getString() {
         return str;
     }
 
-    public int getId() {
-        return this.idFrom;
+    public ChatSocket getSocket() {
+        return skt;
     }
 }

@@ -27,6 +27,10 @@ public class ChatSocket implements Runnable {
         return authenticated;
     }
 
+    public boolean isConnected() {
+        return connected;
+    }
+
     public Socket getSocket() {
         return this.socket;
     }
@@ -39,8 +43,7 @@ public class ChatSocket implements Runnable {
         try {
             socket.getOutputStream().write(m.getString().getBytes(StandardCharsets.UTF_8));
             socket.getOutputStream().write(new byte[] { '\n' });
-            socket.getOutputStream().flush();
-            System.out.println("WRITTEN MESSAGE:" + m.getString());
+            //System.out.println("WRITTEN MESSAGE:" + m.getString());
         } catch (IOException e) {
             // TODO: log exception?
             e.printStackTrace();
@@ -54,12 +57,12 @@ public class ChatSocket implements Runnable {
         try (BufferedReader in = new BufferedReader(new
                 InputStreamReader(socket.getInputStream()))) {
             while(connected) {
-                Message m = new Message(in.readLine(), id);
+                Message m = new Message(in.readLine(), this);
                 if(m.getString() == null) {
                     connected = false;
                     break;
                 }
-                System.out.println("GOT MESSAGE:" + m.getString());
+                //System.out.println("GOT MESSAGE:" + m.getString());
                 messageQueue.add(m);
             }
 

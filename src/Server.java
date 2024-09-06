@@ -1,3 +1,4 @@
+import crypto.Authentication;
 import messages.Message;
 import network.ChatSocket;
 
@@ -6,15 +7,14 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class Server implements Runnable {
 
     int port;
     boolean running;
-    List<ChatSocket> sockets = new ArrayList<ChatSocket>();
-    ArrayBlockingQueue<Message> messages = new ArrayBlockingQueue<Message>(50);
+    List<ChatSocket> sockets = new ArrayList<>();
+    ArrayBlockingQueue<Message> messages = new ArrayBlockingQueue<>(50);
 
     public Server(int port) {
         this.port = port;
@@ -32,8 +32,6 @@ public class Server implements Runnable {
         } catch (IOException e) {
             // TODO: log the exception
         }
-
-
     }
 
     @Override
@@ -41,8 +39,13 @@ public class Server implements Runnable {
         while(running) {
             try {
                 Message m = messages.take();
+                if(!m.getSocket().isAuthenticated() && Authentication.checkAuthenticationToken(m.getString())) {
+                    m.getSocket().authenticate();
+                }
                 for(ChatSocket skt : this.sockets) {
-                    skt.send(m);
+                    if(skt.isConnected() && skt.isAuthenticated()) {
+                        skt.send(m);
+                    }
                 }
             } catch (InterruptedException e) {
                 // TODO: log exception and graceful exit?
