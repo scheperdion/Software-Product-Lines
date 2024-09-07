@@ -1,4 +1,5 @@
 import crypto.Authentication;
+import crypto.Encryption;
 import messages.Message;
 import network.ChatSocket;
 
@@ -10,6 +11,7 @@ public class Client implements Runnable{
     boolean running = false;
     ArrayBlockingQueue<Message> messages = new ArrayBlockingQueue<Message>(50);
     private final Logging _logger;
+    final Encryption encryption = new Encryption();
 
     public Client(int id) {
         _logger = new Logging("Client" + id);
@@ -45,7 +47,7 @@ public class Client implements Runnable{
         running = true;
         while(running) {
             try {
-                Message m = messages.take();
+                Message m = encryption.decrypt(messages.take());
                 _logger.logInfo("Message received: " + m.getString());
                 System.out.println(m.getString());
                 // TODO: print message on screen

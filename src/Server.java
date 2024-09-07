@@ -1,4 +1,5 @@
 import crypto.Authentication;
+import crypto.Encryption;
 import messages.Message;
 import network.ChatSocket;
 
@@ -16,6 +17,7 @@ public class Server implements Runnable {
     List<ChatSocket> sockets = new ArrayList<>();
     ArrayBlockingQueue<Message> messages = new ArrayBlockingQueue<>(50);
     Logging _logger;
+    final Encryption encryption = new Encryption();
     
     public Server(int port) {
         _logger = new Logging("Server"+port);
@@ -40,7 +42,7 @@ public class Server implements Runnable {
     public void run() {
         while(running) {
             try {
-                Message m = messages.take();
+                Message m = encryption.decrypt(messages.take());
                 if(!m.getSocket().isAuthenticated() && Authentication.checkAuthenticationToken(m.getString())) {
                     m.getSocket().authenticate();
                 }

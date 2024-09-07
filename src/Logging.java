@@ -11,8 +11,11 @@ public class Logging {
 
     public Logging(String fileName)
     {
+        if (!fileName.endsWith(".log")){fileName = fileName + ".log";}
+        fileName = "Logs/" + fileName;
+
         try {
-            FileHandler _filehandler = new FileHandler(fileName, true);
+            FileHandler _filehandler = new FileHandler(fileName, false);
             SimpleFormatter _formatter = new SimpleFormatter();
             _filehandler.setFormatter(_formatter);
             _logger.addHandler(_filehandler);
@@ -29,18 +32,23 @@ public class Logging {
         return  _dateTimeFormatter.format(LocalDateTime.now());
     }
 
+    private String standard_format(String msg)
+    {
+        return getDateTime() + " " + msg;
+    }
+
     public void logInfo(String msg)
     {
-        _logger.info(getDateTime() + msg);
+        _logger.info(standard_format(msg));
     }
 
     public void logWarning(String msg)
     {
-        _logger.warning(getDateTime() + msg);
+        _logger.warning(standard_format(msg));
     }
 
     public void logSevere(String msg)
     {
-        _logger.severe(getDateTime() + msg);
+        _logger.severe(standard_format(msg));
     }
 }

@@ -1,5 +1,6 @@
 package network;
 
+import crypto.Encryption;
 import messages.Message;
 
 import java.io.*;
@@ -13,6 +14,8 @@ public class ChatSocket implements Runnable {
     private Socket socket;
     private Queue<Message> messageQueue;
     private boolean connected = false;
+
+    private final Encryption encryption = new Encryption();
 
     public ChatSocket(int id, Socket socket, Queue<Message> messageQueue) {
         this.id = id;
@@ -41,7 +44,7 @@ public class ChatSocket implements Runnable {
 
     public void send(Message m) {
         try {
-            socket.getOutputStream().write(m.getString().getBytes(StandardCharsets.UTF_8));
+            socket.getOutputStream().write(encryption.encrypt(m.getString()).getBytes(StandardCharsets.UTF_8));
             socket.getOutputStream().write(new byte[] { '\n' });
             //System.out.println("WRITTEN MESSAGE:" + m.getString());
         } catch (IOException e) {
