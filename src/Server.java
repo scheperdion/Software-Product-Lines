@@ -15,8 +15,10 @@ public class Server implements Runnable {
     boolean running;
     List<ChatSocket> sockets = new ArrayList<>();
     ArrayBlockingQueue<Message> messages = new ArrayBlockingQueue<>(50);
-
+    Logging _logger;
+    
     public Server(int port) {
+        _logger = new Logging("Server"+port);
         this.port = port;
     }
     public void listen() {
@@ -30,7 +32,7 @@ public class Server implements Runnable {
                 sockets.add(chatSkt);
             }
         } catch (IOException e) {
-            // TODO: log the exception
+            _logger.logSevere("Exception occurred: " + e.getMessage());
         }
     }
 
@@ -42,6 +44,7 @@ public class Server implements Runnable {
                 if(!m.getSocket().isAuthenticated() && Authentication.checkAuthenticationToken(m.getString())) {
                     m.getSocket().authenticate();
                 }
+                _logger.logInfo("Distribute message: " + m.getString());
                 for(ChatSocket skt : this.sockets) {
                     if(skt.isConnected() && skt.isAuthenticated()) {
                         skt.send(m);
@@ -49,6 +52,7 @@ public class Server implements Runnable {
                 }
             } catch (InterruptedException e) {
                 // TODO: log exception and graceful exit?
+                _logger.logSevere("Exception occurred: " + e.getMessage());
                 throw new RuntimeException(e);
             }
 

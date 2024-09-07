@@ -9,10 +9,10 @@ public class Client implements Runnable{
     private ChatSocket socket;
     boolean running = false;
     ArrayBlockingQueue<Message> messages = new ArrayBlockingQueue<Message>(50);
+    private final Logging _logger;
 
-
-    public Client() {
-
+    public Client(int id) {
+        _logger = new Logging("Client" + id);
     }
 
     public void connect(int port) {
@@ -26,6 +26,7 @@ public class Client implements Runnable{
             t.start();
         }
         catch(Exception e) {
+            _logger.logSevere("Exception occurred during connecting: " + e.getMessage());
             System.out.print("Whoops! It didn't work!\n");
         }
     }
@@ -35,6 +36,7 @@ public class Client implements Runnable{
     }
 
     public void send(Message m) {
+        _logger.logInfo("Message send: " + m.getString());
         socket.send(m);
     }
 
@@ -44,10 +46,12 @@ public class Client implements Runnable{
         while(running) {
             try {
                 Message m = messages.take();
+                _logger.logInfo("Message received: " + m.getString());
                 System.out.println(m.getString());
                 // TODO: print message on screen
             } catch (InterruptedException e) {
                 // TODO: log exception and graceful exit?
+                _logger.logSevere("Exception occurred: " + e.getMessage());
                 throw new RuntimeException(e);
             }
 
