@@ -1,6 +1,7 @@
 import messages.Message;
 
 import java.util.Random;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class ChatClient {
@@ -11,6 +12,10 @@ public class ChatClient {
         t.start();
 
         c.authenticate();
-        c.send(new Message("Client message!" + new Random().nextInt(1024), null));
+        final Scanner scanner = new Scanner(System.in);
+        while(true) {
+            System.out.printf("> \n");
+            c.send(new Message(scanner.nextLine(), null));
+        }
     }
 }
