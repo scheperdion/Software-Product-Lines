@@ -1,6 +1,7 @@
 import crypto.Authentication;
 import crypto.Encryption;
 import messages.Message;
+import messages.MessageColor;
 import network.ChatSocket;
 
 import java.net.Socket;
@@ -41,7 +42,6 @@ public class Client implements Runnable{
         _logger.logInfo("Message send: " + m.getString());
         socket.send(m);
     }
-
     @Override
     public void run() {
         running = true;
@@ -49,7 +49,8 @@ public class Client implements Runnable{
             try {
                 Message m = encryption.decrypt(messages.take());
                 _logger.logInfo("Message received: " + m.getString());
-                System.out.println(m.getString());
+                System.out.println(MessageColor.getWithColor(m.getString()));
+
                 // TODO: print message on screen
             } catch (InterruptedException e) {
                 // TODO: log exception and graceful exit?
