@@ -1,4 +1,3 @@
-import crypto.Encryption;
 import messages.Message;
 
 import java.util.Random;
@@ -8,7 +7,7 @@ import java.util.Random;
 public class SmokeTest {
     public static void main(String[] args) {
 
-        Server s = new Server(6554);
+        AuthenticationServer s = new AuthenticationServer(6554);
         Thread t1 = new Thread(s);
         t1.start();
         Thread t3 = new Thread(s::listen);

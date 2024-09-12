@@ -1,4 +1,3 @@
-import crypto.Authentication;
 import crypto.Encryption;
 import messages.Message;
 import network.ChatSocket;
@@ -10,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 
-public class Server implements Runnable {
+public abstract class AServer implements Runnable {
 
     int port;
     boolean running;
@@ -18,11 +17,14 @@ public class Server implements Runnable {
     ArrayBlockingQueue<Message> messages = new ArrayBlockingQueue<>(50);
     Logging _logger;
     final Encryption encryption = new Encryption();
-    
-    public Server(int port) {
+
+    public AServer(int port) {
         _logger = new Logging("Server"+port);
         this.port = port;
     }
+
+    public abstract void preprocess(Message m);
+
     public void listen() {
         running = true;
         try (ServerSocket srvr = new ServerSocket(this.port)) {
@@ -43,9 +45,10 @@ public class Server implements Runnable {
         while(running) {
             try {
                 Message m = encryption.decrypt(messages.take());
-                if(!m.getSocket().isAuthenticated() && Authentication.checkAuthenticationToken(m.getString())) {
-                    m.getSocket().authenticate();
-                }
+                preprocess(m);
+//                if(!m.getSocket().isAuthenticated() && Authentication.checkAuthenticationToken(m.getString())) {
+//                    m.getSocket().authenticate();
+//                }
                 _logger.logInfo("Distribute message: " + m.getString());
                 for(ChatSocket skt : this.sockets) {
                     if(skt.isConnected() && skt.isAuthenticated()) {
