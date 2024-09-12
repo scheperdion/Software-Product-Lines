@@ -1,4 +1,5 @@
 import messages.Message;
+import Server.PreprocessorChain;
 
 import java.util.Random;
 
@@ -7,7 +8,7 @@ import java.util.Random;
 public class SmokeTest {
     public static void main(String[] args) {
 
-        AuthenticationServer s = new AuthenticationServer(6554);
+        Server s = new Server(6554, new PreprocessorChain());
         Thread t1 = new Thread(s);
         t1.start();
         Thread t3 = new Thread(s::listen);

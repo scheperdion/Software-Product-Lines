@@ -1,6 +1,8 @@
 import crypto.Encryption;
 import messages.Message;
 import network.ChatSocket;
+import Server.PreprocessorChain;
+
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -9,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 
-public abstract class AServer implements Runnable {
+public class Server implements Runnable {
 
     int port;
     boolean running;
@@ -17,13 +19,15 @@ public abstract class AServer implements Runnable {
     ArrayBlockingQueue<Message> messages = new ArrayBlockingQueue<>(50);
     Logging _logger;
     final Encryption encryption = new Encryption();
+    PreprocessorChain _preMessageProcessor;
 
-    public AServer(int port) {
+
+//    Add variability by inserting various Preprocessors in the PreprocessorChain where the order of execution is the order of insertion
+    public Server(int port, PreprocessorChain chain) {
         _logger = new Logging("Server"+port);
         this.port = port;
+        _preMessageProcessor = chain;
     }
-
-    public abstract void preprocess(Message m);
 
     public void listen() {
         running = true;
@@ -45,10 +49,7 @@ public abstract class AServer implements Runnable {
         while(running) {
             try {
                 Message m = encryption.decrypt(messages.take());
-                preprocess(m);
-//                if(!m.getSocket().isAuthenticated() && Authentication.checkAuthenticationToken(m.getString())) {
-//                    m.getSocket().authenticate();
-//                }
+                _preMessageProcessor.process(m);
                 _logger.logInfo("Distribute message: " + m.getString());
                 for(ChatSocket skt : this.sockets) {
                     if(skt.isConnected() && skt.isAuthenticated()) {
