@@ -1,5 +1,4 @@
-import crypto.Authentication;
-import crypto.Encryption;
+import crypto.*;
 import messages.Message;
 import messages.MessageColor;
 import network.ChatSocket;
@@ -12,7 +11,7 @@ public class Client implements Runnable{
     boolean running = false;
     ArrayBlockingQueue<Message> messages = new ArrayBlockingQueue<Message>(50);
     private final Logging _logger;
-    final Encryption encryption = new Encryption();
+    final IEncryptionRoutine encryption = new VigenereEncryption(new Rot13Encryption(new EncryptionRoutine()), "key");
 
     public Client(int id) {
         _logger = new Logging("Client" + id);
@@ -23,7 +22,8 @@ public class Client implements Runnable{
             socket = new ChatSocket(
                     0,
                     new Socket("localhost", port),
-                    messages
+                    messages,
+                    encryption
             );
             Thread t = new Thread(socket);
             t.start();

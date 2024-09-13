@@ -1,5 +1,4 @@
-import crypto.Authentication;
-import crypto.Encryption;
+import crypto.*;
 import messages.Message;
 import network.ChatSocket;
 
@@ -17,7 +16,7 @@ public class Server implements Runnable {
     List<ChatSocket> sockets = new ArrayList<>();
     ArrayBlockingQueue<Message> messages = new ArrayBlockingQueue<>(50);
     Logging _logger;
-    final Encryption encryption = new Encryption();
+    final IEncryptionRoutine encryption = new VigenereEncryption(new Rot13Encryption(new EncryptionRoutine()), "key");
     
     public Server(int port) {
         _logger = new Logging("Server"+port);
@@ -28,7 +27,7 @@ public class Server implements Runnable {
         try (ServerSocket srvr = new ServerSocket(this.port)) {
             while(running) {
                 Socket skt = srvr.accept();
-                ChatSocket chatSkt = new ChatSocket(sockets.size(), skt, messages);
+                ChatSocket chatSkt = new ChatSocket(sockets.size(), skt, messages, encryption);
                 Thread client = new Thread(chatSkt);
                 client.start();
                 sockets.add(chatSkt);

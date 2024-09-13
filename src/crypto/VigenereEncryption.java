@@ -2,41 +2,27 @@ package crypto;
 
 import messages.Message;
 
-public class Encryption implements IEncryptionRoutine {
+public class VigenereEncryption extends EncryptionDecorator{
+    private String key;
+
+    public VigenereEncryption(IEncryptionRoutine r, String key) {
+        super(r);
+        this.key = key;
+    }
 
     @Override
     public Message encrypt(Message m) {
-        return new Message(encrypt(m.getString()), m.getSocket());
+        String res = vigenereCipherEncrypt(m.getString(), this.key);
+        return super.encrypt(new Message(res, m.getSocket()));
     }
 
     @Override
     public Message decrypt(Message m) {
-        return new Message(decrypt(m.getString()), m.getSocket());
+        Message m2 = super.decrypt(m);
+        return new Message(vigenereCipherDecrypt(m2.getString(), this.key), m.getSocket());
     }
 
-    public String encrypt(String s) {
-        return vigenereCipherEncrypt(rot13(s), "key");
-    }
-
-    public String decrypt(String s) {
-        return rot13(vigenereCipherDecrypt(s,"key"));
-    }
-
-
-    public String rot13(String s) {
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if       (c >= 'a' && c <= 'm') c += 13;
-            else if  (c >= 'A' && c <= 'M') c += 13;
-            else if  (c >= 'n' && c <= 'z') c -= 13;
-            else if  (c >= 'N' && c <= 'Z') c -= 13;
-            result.append(c);
-        }
-        return result.toString();
-    }
-
-//    Source: https://raw.githubusercontent.com/mm898/Vigenere-cipher/master/vigCipher.java
+    //    Source: https://raw.githubusercontent.com/mm898/Vigenere-cipher/master/vigCipher.java
     private String vigenereCipherEncrypt(String s, String key) {
         StringBuilder EMessage = new StringBuilder();
         for (int i = 0, j = 0; i < s.length(); i++) {
