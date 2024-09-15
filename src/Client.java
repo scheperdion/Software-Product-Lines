@@ -27,7 +27,7 @@ public class Client implements Runnable{
             );
             Thread t = new Thread(socket);
             t.start();
-            Config config = new Config();
+            Config config = Config.getConfig();
             _logger.logInfo(config.getProperty("COLOR_ENABLED"));
             _logger.logInfo(config.getProperty("AUTHENTICATION_ENABLED"));
 

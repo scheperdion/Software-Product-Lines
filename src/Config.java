@@ -4,13 +4,22 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class Config {
+    private static Config _instance;
     private final Properties properties;
     private static final String CONFIG_FILE_PATH = "src/config.properties";
 
 
-    public Config() {
+
+    private Config() {
         properties = new Properties();
         loadConfig();
+    }
+
+    public static Config getConfig() {
+        if(_instance != null) {
+            _instance = new Config();
+        }
+        return _instance;
     }
 
     private void loadConfig() {
