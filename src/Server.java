@@ -20,6 +20,11 @@ public class Server implements Runnable {
     
     public Server(int port) {
         _logger = new Logging("Server"+port);
+
+        Config config = new Config();
+        String configInfo = config.getConfigInfo();
+        _logger.logInfo("Initialized Config: " + configInfo);
+
         this.port = port;
     }
     public void listen() {

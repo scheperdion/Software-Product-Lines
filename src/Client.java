@@ -27,6 +27,10 @@ public class Client implements Runnable{
             );
             Thread t = new Thread(socket);
             t.start();
+            Config config = new Config();
+            _logger.logInfo(config.getProperty("COLOR_ENABLED"));
+            _logger.logInfo(config.getProperty("AUTHENTICATION_ENABLED"));
+
         }
         catch(Exception e) {
             _logger.logSevere("Exception occurred during connecting: " + e.getMessage());
