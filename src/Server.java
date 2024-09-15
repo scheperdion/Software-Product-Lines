@@ -1,6 +1,8 @@
 import crypto.*;
 import messages.Message;
 import network.ChatSocket;
+import Server.PreprocessorChain;
+
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -16,6 +18,10 @@ public class Server implements Runnable {
     List<ChatSocket> sockets = new ArrayList<>();
     ArrayBlockingQueue<Message> messages = new ArrayBlockingQueue<>(50);
     Logging _logger;
+    PreprocessorChain _preMessageProcessor;
+
+
+//    Add variability by inserting various Preprocessors in the PreprocessorChain where the order of execution is the order of insertion
     final IEncryptionRoutine encryption = new VigenereEncryption(new Rot13Encryption(new EncryptionRoutine()), "key");
     
     public Server(int port) {
@@ -26,7 +32,9 @@ public class Server implements Runnable {
         _logger.logInfo("Initialized Config: " + configInfo);
 
         this.port = port;
+        _preMessageProcessor = chain;
     }
+
     public void listen() {
         running = true;
         try (ServerSocket srvr = new ServerSocket(this.port)) {
@@ -47,9 +55,7 @@ public class Server implements Runnable {
         while(running) {
             try {
                 Message m = encryption.decrypt(messages.take());
-                if(!m.getSocket().isAuthenticated() && Authentication.checkAuthenticationToken(m.getString())) {
-                    m.getSocket().authenticate();
-                }
+                _preMessageProcessor.process(m);
                 _logger.logInfo("Distribute message: " + m.getString());
                 for(ChatSocket skt : this.sockets) {
                     if(skt.isConnected() && skt.isAuthenticated()) {

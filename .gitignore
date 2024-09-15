@@ -32,3 +32,6 @@ bin/
 
 ### Log ###
 /Logs
+
+### Zip ###
+*.zip
