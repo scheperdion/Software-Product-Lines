@@ -24,10 +24,10 @@ public class Server implements Runnable {
 //    Add variability by inserting various Preprocessors in the PreprocessorChain where the order of execution is the order of insertion
     final IEncryptionRoutine encryption = new VigenereEncryption(new Rot13Encryption(new EncryptionRoutine()), "key");
     
-    public Server(int port) {
+    public Server(int port, PreprocessorChain chain) {
         _logger = new Logging("Server"+port);
 
-        Config config = new Config();
+        Config config = Config.getConfig();
         String configInfo = config.getConfigInfo();
         _logger.logInfo("Initialized Config: " + configInfo);
 
