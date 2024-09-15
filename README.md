@@ -27,13 +27,16 @@ We think that encryption should be implemented by default.
 
 # Task 5: Design pattern implementation
 1. Color -> Template Method
-Gives the advantage to have an abstract Message class that can have different processors on the content of the message
-before sending. To be able to add color to the message, but also to automatically translate or insert emojis (possible future features).
-The decorator would fit here as well.
+
+   Gives the advantage to have an abstract Message class that can have different processors on the content of the message
+   before sending. To be able to add color to the message, but also to automatically translate or insert emojis (possible future features).
+   The decorator would fit here as well.
 
 2. Encryption -> Decorator
-The decorator requires that you do not change the interface of the different decorating functions. Encryption in this
-example only has `encrypt` and `decrypt` methods.
+
+   The decorator requires that you do not change the interface of the different decorating functions. Encryption in this
+   example only has `encrypt` and `decrypt` methods. So is very well suited, plus this gives the unique business selling point that
+   you can specify your own encryption routine with keys in a config file.
 
 3. Authentication -> ??
 
