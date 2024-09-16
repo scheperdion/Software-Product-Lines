@@ -9,6 +9,8 @@ public class SmokeTest {
     public static void main(String[] args) {
 
         Server s = new Server(6554, new PreprocessorChain());
+
+
         Thread t1 = new Thread(s);
         t1.start();
         Thread t3 = new Thread(s::listen);

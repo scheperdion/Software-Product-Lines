@@ -1,7 +1,9 @@
 package crypto;
 
+
+
 public class Authentication {
-    static String password = "This is a private channel";
+    static String password = "0000";//"This is a private channel";
 
     public static boolean checkAuthenticationToken(String token) {
         return token.equals(password);

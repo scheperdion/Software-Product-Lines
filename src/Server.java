@@ -19,7 +19,7 @@ public class Server implements Runnable {
     List<ChatSocket> sockets = new ArrayList<>();
     ArrayBlockingQueue<Message> messages = new ArrayBlockingQueue<>(50);
     Logging _logger;
-    PreprocessorChain _preMessageProcessor;
+    PreprocessorChain _messagePreprocessor;
 
 
 //    Add variability by inserting various Preprocessors in the PreprocessorChain where the order of execution is the order of insertion
@@ -33,7 +33,7 @@ public class Server implements Runnable {
         _logger.logInfo("Initialized Config: " + configInfo);
 
         this.port = port;
-        _preMessageProcessor = chain;
+        _messagePreprocessor = chain;
     }
 
     public void listen() {
@@ -55,8 +55,8 @@ public class Server implements Runnable {
     public void run() {
         while(running) {
             try {
-                Message m = encryption.decrypt(messages.take());
-                _preMessageProcessor.process(m);
+                Message m = messages.take();
+                _messagePreprocessor.process(m);
                 _logger.logInfo("Distribute message: " + m.getString());
                 for(ChatSocket skt : this.sockets) {
                     if(skt.isConnected() && skt.isAuthenticated()) {

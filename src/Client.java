@@ -4,6 +4,7 @@ import messages.Message;
 import messages.MessageColorProcessor;
 import messages.MessageProcessor;
 import network.ChatSocket;
+import crypto.EncryptionFactory;
 
 import java.net.Socket;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -13,7 +14,7 @@ public class Client implements Runnable{
     boolean running = false;
     ArrayBlockingQueue<Message> messages = new ArrayBlockingQueue<Message>(50);
     private final Logging _logger;
-    final IEncryptionRoutine encryption = new VigenereEncryption(new Rot13Encryption(new EncryptionRoutine()), "key");
+    final IEncryptionRoutine encryption = (new EncryptionFactory()).createEncryption();
 
     public Client(int id) {
         _logger = new Logging("Client" + id);
@@ -48,6 +49,7 @@ public class Client implements Runnable{
         _logger.logInfo("Message send: " + m.getString());
         socket.send(m);
     }
+
     @Override
     public void run() {
         running = true;

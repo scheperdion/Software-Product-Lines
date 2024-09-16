@@ -11,16 +11,19 @@ public class PreprocessorChain {
     private int _index = 0;
 
 
-    public PreprocessorChain addPreprocessor(Preprocessor preprocessor) {
+    public void addPreprocessor(Preprocessor preprocessor) {
         _preprocessors.add(preprocessor);
-        return this;
     }
 
-    public void process(Message message) {
-        while (_index < _preprocessors.size()) {
-            Preprocessor preprocessor = _preprocessors.get(_index++);
-            preprocessor.process(message, this);
-        }
+    public PreprocessResult process(Message message) {
+        PreprocessResult result = new PreprocessResult(message);
         _index = 0;
+
+        while (_index < _preprocessors.size() && (!result.stopPreprocessing || !result.sendMessage)) {
+            Preprocessor preprocessor = _preprocessors.get(_index++);
+            result = preprocessor.process(result);
+        }
+
+        return result;
     }
 }

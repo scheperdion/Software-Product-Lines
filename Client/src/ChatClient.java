@@ -11,7 +11,7 @@ public class ChatClient {
         c.connect(6554);
         t.start();
 
-        c.authenticate();
+//        c.authenticate();
         final Scanner scanner = new Scanner(System.in);
         while(true) {
             System.out.printf("> \n");

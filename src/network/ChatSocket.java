@@ -3,6 +3,7 @@ package network;
 import crypto.Encryption;
 import crypto.IEncryptionRoutine;
 import messages.Message;
+import config.Config;
 
 import java.io.*;
 import java.net.Socket;
@@ -28,8 +29,9 @@ public class ChatSocket implements Runnable {
     public void authenticate() {
         this.authenticated = true;
     }
+
     public boolean isAuthenticated() {
-        return authenticated;
+        return "FALSE".equalsIgnoreCase(Config.getConfig().getProperty("AUTHENTICATION_ENABLED")) || authenticated;
     }
 
     public boolean isConnected() {
@@ -68,7 +70,8 @@ public class ChatSocket implements Runnable {
                     break;
                 }
                 //System.out.println("GOT MESSAGE:" + m.getString());
-                messageQueue.add(m);
+                ;
+                messageQueue.add(encryption.decrypt(m));
             }
 
         } catch (IOException e) {
