@@ -19,11 +19,13 @@ parameters vs. parameter passing.
 Explain how the feature selection works from the user perspective. Is there a risk of invalid
 feature selections and if yes, how do you address it?
 ```
-
+We use a file for the feature selection inspired by the apache example. The user can then specify the parameters once
+   and doesn't have to think about them afterwards. (read-only?)
 ```
 If you feel strongly about not implementing variability for one or several features, explain why.
 ```
-We think that encryption should be implemented by default.
+We think that encryption should be implemented by default, because it costs the user very little in terms of performance but does safe hem/her potentially great trouble.
+Logging is also a feature we argue should be implemented by default. Logging makes it possible for the developers to check what happened if anything goes wrong.
 
 # Task 5: Design pattern implementation
 Explain your design decisions. In particular, explain which design pattern(s) you selected
@@ -46,8 +48,3 @@ and why.
    Chain of responsibility allows the server to be flexible in what features are used to preprocess messages.
    This can be used for authentication and other features in the future.
 
-
-Explain how the feature selection works from the user perspective.  
-
-4. We use a file for the feature selection inspired by the apache example. The user can then specify the parameters once
-and doesn't have to think about them afterwards. (read-only?)
