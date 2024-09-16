@@ -13,7 +13,7 @@ We use the idea build system for now.
 Explain your design decisions. In particular, explain your decision regarding global
 parameters vs. parameter passing.
 ```
-5. We use parameter passing to be able to test the parts of the chat application better.
+5. We use global parameters because the configuration is needed in many different parts of the system.
 
 ```
 Explain how the feature selection works from the user perspective. Is there a risk of invalid
@@ -26,6 +26,9 @@ If you feel strongly about not implementing variability for one or several featu
 We think that encryption should be implemented by default.
 
 # Task 5: Design pattern implementation
+Explain your design decisions. In particular, explain which design pattern(s) you selected
+and why.
+
 1. Color -> Template Method
 
    Gives the advantage to have an abstract Message class that can have different processors on the content of the message
@@ -38,11 +41,11 @@ We think that encryption should be implemented by default.
    example only has `encrypt` and `decrypt` methods. So is very well suited, plus this gives the unique business selling point that
    you can specify your own encryption routine with keys in a config file.
 
-3. Authentication -> ??
+3. Authentication -> Chain of responsibility
 
+   Chain of responsibility allows the server to be flexible in what features are used to preprocess messages.
+   This can be used for authentication and other features in the future.
 
-Explain your design decisions. In particular, explain which design pattern(s) you selected
-and why.
 
 Explain how the feature selection works from the user perspective.  
 
