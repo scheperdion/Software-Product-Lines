@@ -1,6 +1,8 @@
+import config.Config;
 import crypto.*;
 import messages.Message;
-import messages.MessageColor;
+import messages.MessageColorProcessor;
+import messages.MessageProcessor;
 import network.ChatSocket;
 
 import java.net.Socket;
@@ -53,7 +55,9 @@ public class Client implements Runnable{
             try {
                 Message m = encryption.decrypt(messages.take());
                 _logger.logInfo("Message received: " + m.getString());
-                System.out.println(MessageColor.getWithColor(m.getString()));
+
+                MessageProcessor processor = new MessageColorProcessor();
+                processor.processMessage(m);
 
                 // TODO: print message on screen
             } catch (InterruptedException e) {

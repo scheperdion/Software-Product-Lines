@@ -1,3 +1,4 @@
+import config.Config;
 import crypto.*;
 import messages.Message;
 import network.ChatSocket;
