@@ -34,7 +34,7 @@ public class Logging {
 
     private String standard_format(String msg)
     {
-        return getDateTime() + " " + msg;
+        return msg;//getDateTime() + " " + msg;
     }
 
     public void logInfo(String msg)
