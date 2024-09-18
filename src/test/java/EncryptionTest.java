@@ -1,5 +1,3 @@
-package src;
-
 import crypto.Encryption;
 import messages.Message;
 
