@@ -21,7 +21,12 @@ public class CommandLineInterface implements MessageObserver, UserInterface {
         final Scanner scanner = new Scanner(System.in);
         while(true) {
             System.out.printf("> \n");
-            c.send(new Message(scanner.nextLine(), null));
+            this.sendMessage(scanner.nextLine());
         }
+    }
+
+    @Override
+    public void sendMessage(String message) {
+        c.send(new Message(message, null));
     }
 }
