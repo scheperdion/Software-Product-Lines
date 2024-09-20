@@ -1,10 +1,12 @@
 import crypto.Authentication;
 import crypto.Encryption;
 import messages.Message;
-import messages.MessageColor;
 import network.ChatSocket;
+import ui.MessageObserver;
 
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class Client implements Runnable{
@@ -13,9 +15,15 @@ public class Client implements Runnable{
     ArrayBlockingQueue<Message> messages = new ArrayBlockingQueue<Message>(50);
     private final Logging _logger;
     final Encryption encryption = new Encryption();
+    final List<MessageObserver> messageObservers;
 
     public Client(int id) {
         _logger = new Logging("Client" + id);
+        this.messageObservers = new ArrayList<>();
+    }
+
+    public void addObserver(MessageObserver o) {
+        this.messageObservers.add(o);
     }
 
     public void connect(int port) {
@@ -30,7 +38,6 @@ public class Client implements Runnable{
         }
         catch(Exception e) {
             _logger.logSevere("Exception occurred during connecting: " + e.getMessage());
-            System.out.print("Whoops! It didn't work!\n");
         }
     }
 
@@ -49,11 +56,10 @@ public class Client implements Runnable{
             try {
                 Message m = encryption.decrypt(messages.take());
                 _logger.logInfo("Message received: " + m.getString());
-                System.out.println(MessageColor.getWithColor(m.getString()));
-
-                // TODO: print message on screen
+                for (MessageObserver o : this.messageObservers) {
+                    o.notify(m);
+                }
             } catch (InterruptedException e) {
-                // TODO: log exception and graceful exit?
                 _logger.logSevere("Exception occurred: " + e.getMessage());
                 throw new RuntimeException(e);
             }
