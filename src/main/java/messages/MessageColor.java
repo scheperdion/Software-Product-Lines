@@ -1,5 +1,6 @@
 package messages;
 
+import java.awt.*;
 import java.util.Map;
 
 public class MessageColor {
@@ -23,10 +24,47 @@ public class MessageColor {
 
         for (Map.Entry<String, String> entry : colorMap.entrySet()) {
             if (text.startsWith(entry.getKey())) {
-                return entry.getValue() + text.replaceFirst(entry.getKey(), "") + ANSI_RESET;
+                return entry.getValue() + stripColor(text, entry.getKey()) + ANSI_RESET;
             }
         }
 
         return ANSI_RESET + text;
+    }
+
+    public static Color getColor(String text) {
+        Map<String, Color> colorMap = Map.of(
+                "RED: ", Color.RED,
+                "GREEN: ", Color.GREEN,
+                "YELLOW: ", Color.YELLOW,
+                "BLUE: ", Color.BLUE,
+                "PINK: ", Color.PINK,
+                "CYAN: ", Color.CYAN
+        );
+        for (Map.Entry<String, Color> entry : colorMap.entrySet()) {
+            if (text.startsWith(entry.getKey())) {
+                return entry.getValue();
+            }
+        }
+        return Color.GREEN;
+    }
+
+    public static String stripColor(String text) {
+        Map<String, Color> colorMap = Map.of(
+                "RED: ", Color.RED,
+                "GREEN: ", Color.GREEN,
+                "YELLOW: ", Color.YELLOW,
+                "BLUE: ", Color.BLUE,
+                "PINK: ", Color.PINK,
+                "CYAN: ", Color.CYAN
+        );
+        for (Map.Entry<String, Color> entry : colorMap.entrySet()) {
+            if (text.startsWith(entry.getKey())) {
+                return stripColor(text, entry.getKey());
+            }
+        }
+        return text;
+    }
+    public static String stripColor(String text, String colorCode) {
+        return text.replaceFirst(colorCode, "");
     }
 }
