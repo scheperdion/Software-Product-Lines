@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<featureModel>
+	<properties>
+		<calculations key="tautology" value="true"/>
+		<calculations key="auto" value="true"/>
+		<graphics key="legendposition" value="724,41"/>
+		<graphics key="showconstraints" value="true"/>
+		<calculations key="redundant" value="true"/>
+		<graphics key="showshortnames" value="false"/>
+		<graphics key="layout" value="horizontal"/>
+		<graphics key="legendhidden" value="false"/>
+		<graphics key="layoutalgorithm" value="1"/>
+		<calculations key="features" value="true"/>
+		<graphics key="autolayoutconstraints" value="false"/>
+		<graphics key="legendautolayout" value="false"/>
+		<graphics key="showcollapsedconstraints" value="true"/>
+		<calculations key="constraints" value="true"/>
+	</properties>
+	<struct>
+		<and abstract="true" mandatory="true" name="Chatter">
+			<graphics key="collapsed" value="false"/>
+			<or abstract="true" name="Security">
+				<or abstract="true" name="Encryption">
+					<graphics key="collapsed" value="false"/>
+					<feature name="Rot13"/>
+					<feature name="Vigenere"/>
+				</or>
+				<feature name="Authentication"/>
+			</or>
+			<alt abstract="true" mandatory="true" name="UI">
+				<feature name="CL"/>
+				<feature name="GUI"/>
+			</alt>
+			<feature name="Color"/>
+			<feature name="Log"/>
+		</and>
+	</struct>
+	<constraints>
+		<rule>
+			<imp>
+				<var>Encryption</var>
+				<var>UI</var>
+			</imp>
+		</rule>
+	</constraints>
+</featureModel>
