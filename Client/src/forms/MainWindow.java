@@ -20,6 +20,15 @@ public class MainWindow extends JFrame {
 
     public MainWindow(UserInterface ui) {
         this.ui = ui;
+        panel1 = new JPanel();
+        panel1.setLayout(new BorderLayout());  // Or any other layout manager you prefer
+
+        textPane = new JTextPane();
+        HIThereTextField = new JTextField(20);
+
+        // Add components to the panel1 layout
+        panel1.add(new JScrollPane(textPane), BorderLayout.CENTER); // Scrollable text area
+        panel1.add(HIThereTextField, BorderLayout.SOUTH); // Input field at the bottom
     }
 
     public void initialize() {
