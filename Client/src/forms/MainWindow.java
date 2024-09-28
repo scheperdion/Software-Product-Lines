@@ -1,10 +1,8 @@
 package forms;
 
-import messages.MessageColor;
 import ui.UserInterface;
 
 import javax.swing.*;
-import javax.swing.text.BadLocationException;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -53,9 +51,9 @@ public class MainWindow extends JFrame {
 
     public void addMessage(String message) {
         try {
-            StyleConstants.setForeground(textPaneStyle, MessageColor.getColor(message));
+            StyleConstants.setForeground(textPaneStyle, messages.MessageColorPlugin.getInstance().getColor(message));
             StyledDocument doc = textPane.getStyledDocument();
-            doc.insertString(doc.getLength(), MessageColor.stripColor(message) + "\n",textPaneStyle);
+            doc.insertString(doc.getLength(), messages.MessageColorPlugin.getInstance().stripColor(message) + "\n",textPaneStyle);
         }
         catch (Exception e){}
     }
