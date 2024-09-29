@@ -3,7 +3,7 @@ package messages;
 import network.ChatSocket;
 
 public class Message {
-    private final String str;
+    private String str;
     private final ChatSocket skt;
 
     public Message(String str, ChatSocket skt) {
@@ -14,6 +14,8 @@ public class Message {
     public String getString() {
         return str;
     }
+
+    public void setString(String s) { this.str = s; };
 
     public ChatSocket getSocket() {
         return skt;

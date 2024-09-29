@@ -1,4 +1,5 @@
 import interfaces.IMessageColor;
+import interfaces.IMessageProcessor;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -21,6 +22,14 @@ public class PluginLoader extends ClassLoader{
         Object o = loadPlugin(fileName);
         if(o instanceof IMessageColor) {
             return (IMessageColor) o;
+        }
+        throw new RuntimeException("Could not load message color plugin");
+    }
+
+    public IMessageProcessor loadMessageProcessor(String fileName) {
+        Object o = loadPlugin(fileName);
+        if(o instanceof IMessageProcessor) {
+            return (IMessageProcessor) o;
         }
         throw new RuntimeException("Could not load message color plugin");
     }
