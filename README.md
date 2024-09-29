@@ -17,4 +17,5 @@ We use the idea build system for now.
 - we wanted to do the 'processMessage'  example from the lecture but for encryption realised that this would not work.
   since the decrypt operation is not the same as the encryption operation. We decided two methods for the message processor,
   one for incoming, and one for outgoing messages. Another thing: vigenere requires a 'key', while rot13 does not
-  require a key. Thus for each plugin there is a required extra information before instantiation.
+  require a key. Thus for each plugin there is a required extra information before instantiation. To keep with the idea of
+  a black box framework we kept the interfaces generic, but the framework code changed quite a bit.
