@@ -11,6 +11,11 @@ public class Rot13 implements IMessageProcessor {
         return rot13(message);
     }
 
+    @Override
+    public String processMessageOnServer(String message) {
+        return message;
+    }
+
     private String rot13(String s) {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {

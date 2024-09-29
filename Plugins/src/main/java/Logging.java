@@ -1,13 +1,35 @@
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
-public class Logging {
+public class Logging implements interfaces.IMessageProcessor {
+    @Override
+    public String processIncomingMessage(String message) {
+        logInfo("Message recieved: " + message);
+        return message;
+    }
+
+    @Override
+    public String processOutgoingMessage(String message) {
+        logInfo("Message send: " + message);
+        return message;
+    }
+
+    @Override
+    public String processMessageOnServer(String message) {
+        logInfo("Distribute message: " + message);
+        return message;
+    }
+
     static final Logger _logger = Logger.getLogger(Logging.class.getName());
     final DateTimeFormatter _dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+
+    public Logging(){
+
+    }
 
     public Logging(String fileName)
     {

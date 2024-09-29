@@ -46,4 +46,9 @@ public class Vigenere implements IMessageProcessor {
         }
         return EMessage.toString();
     }
+
+    @Override
+    public String processMessageOnServer(String message) {
+        return message;
+    }
 }

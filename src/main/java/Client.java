@@ -12,12 +12,10 @@ public class Client implements Runnable{
     private ChatSocket socket;
     boolean running = false;
     ArrayBlockingQueue<Message> messages = new ArrayBlockingQueue<Message>(50);
-    private final Logging _logger;
     final MessageProcessors messageProcessors = MessageProcessors.getInstance();
     final List<MessageObserver> messageObservers;
 
     public Client(int id) {
-        _logger = new Logging("Client" + id);
         this.messageObservers = new ArrayList<>();
     }
 
@@ -36,12 +34,11 @@ public class Client implements Runnable{
             t.start();
         }
         catch(Exception e) {
-            _logger.logSevere("Exception occurred during connecting: " + e.getMessage());
+            System.out.println("Exception occurred during connecting: " + e.getMessage());
         }
     }
 
     public void send(Message m) {
-        _logger.logInfo("Message send: " + m.getString());
         socket.send(m);
     }
     @Override
@@ -51,12 +48,11 @@ public class Client implements Runnable{
             try {
                 Message m = messages.take();
                 m.setString(messageProcessors.processIncomingMessage(m.getString()));
-                _logger.logInfo("Message received: " + m.getString());
                 for (MessageObserver o : this.messageObservers) {
                     o.notify(m);
                 }
             } catch (InterruptedException e) {
-                _logger.logSevere("Exception occurred: " + e.getMessage());
+                System.out.println("Exception occurred: " + e.getMessage());
                 throw new RuntimeException(e);
             }
 

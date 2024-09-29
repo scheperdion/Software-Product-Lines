@@ -63,4 +63,8 @@ public class Colors implements IMessageProcessor {
     }
 
 
+    @Override
+    public String processMessageOnServer(String message) {
+        return message;
+    }
 }

@@ -11,7 +11,9 @@ public class ChatClient {
         IMessageProcessor vigenere = pl.loadMessageProcessor(System.getProperty("user.dir") + "/Plugins/target/classes/Vigenere.class");
         IMessageProcessor colors = pl.loadMessageProcessor(System.getProperty("user.dir") + "/Plugins/target/classes/Colors.class");
         IMessageProcessor authentication = pl.loadMessageProcessor(System.getProperty("user.dir") + "/Plugins/target/classes/Authentication.class");
+        IMessageProcessor logging = pl.loadMessageProcessor(System.getProperty("user.dir") + "/Plugins/target/classes/Logging.class");
         processors.addMessageProcessor(authentication);
+        processors.addMessageProcessor(logging);
 //        processors.addMessageProcessor(vigenere);
 //        processors.addMessageProcessor(rot13);
 //        processors.addMessageProcessor(colors);

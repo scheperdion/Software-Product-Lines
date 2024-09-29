@@ -1,3 +1,4 @@
+import crypto.MessageProcessors;
 import messages.Message;
 import network.ChatSocket;
 
@@ -14,10 +15,10 @@ public class Server implements Runnable {
     boolean running;
     List<ChatSocket> sockets = new ArrayList<>();
     ArrayBlockingQueue<Message> messages = new ArrayBlockingQueue<>(50);
-    Logging _logger;
+    final MessageProcessors messageProcessors = MessageProcessors.getInstance();
 
     public Server(int port) {
-        _logger = new Logging("Server"+port);
+        System.out.println("Server"+port);
         this.port = port;
     }
     public void listen() {
@@ -31,7 +32,7 @@ public class Server implements Runnable {
                 sockets.add(chatSkt);
             }
         } catch (IOException e) {
-            _logger.logSevere("Exception occurred: " + e.getMessage());
+            System.out.println("Exception occurred: " + e.getMessage());
         }
     }
 
@@ -40,7 +41,7 @@ public class Server implements Runnable {
         while(running) {
             try {
                 Message m = messages.take();
-                _logger.logInfo("Distribute message: " + m.getString());
+                m.setString(messageProcessors.processMessageOnServer(m.getString()));
                 for(ChatSocket skt : this.sockets) {
                     if(skt.isConnected()) {
                         skt.send(m);
@@ -48,7 +49,7 @@ public class Server implements Runnable {
                 }
             } catch (InterruptedException e) {
                 // TODO: log exception and graceful exit?
-                _logger.logSevere("Exception occurred: " + e.getMessage());
+                System.out.println("Exception occurred: " + e.getMessage());
                 throw new RuntimeException(e);
             }
 

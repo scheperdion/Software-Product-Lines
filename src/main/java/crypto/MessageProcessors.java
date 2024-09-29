@@ -43,4 +43,13 @@ public class MessageProcessors implements IMessageProcessor{
         }
         return result;
     }
+
+    @Override
+    public String processMessageOnServer(String message) {
+        String result = message;
+        for(IMessageProcessor p : processors) {
+            result = p.processMessageOnServer(result);
+        }
+        return result;
+    }
 }

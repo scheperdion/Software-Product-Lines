@@ -16,4 +16,9 @@ public class Authentication implements interfaces.IMessageProcessor {
         if (message.contains(key)) {authenticated = true;}
         return null;
     }
+
+    @Override
+    public String processMessageOnServer(String message) {
+        return message;
+    }
 }
