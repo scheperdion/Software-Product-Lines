@@ -8,9 +8,12 @@ public class ChatServer {
         PluginLoader pl = new PluginLoader();
         MessageProcessors processors = MessageProcessors.getInstance();
         IMessageProcessor rot13 = pl.loadMessageProcessor(System.getProperty("user.dir") + "/Plugins/target/classes/Rot13.class");
+        IMessageProcessor colors = pl.loadMessageProcessor(System.getProperty("user.dir") + "/Plugins/target/classes/Colors.class");
         IMessageProcessor vigenere = pl.loadMessageProcessor(System.getProperty("user.dir") + "/Plugins/target/classes/Vigenere.class");
         processors.addMessageProcessor(rot13);
-        //processors.addMessageProcessor(vigenere);
+//        processors.addMessageProcessor(vigenere);
+//        processors.addMessageProcessor(colors);
+
 
         Server s = new Server(6554);
         Thread t = new Thread(s);

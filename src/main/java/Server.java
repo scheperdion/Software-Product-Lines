@@ -1,5 +1,3 @@
-import crypto.Authentication;
-import crypto.MessageProcessors;
 import messages.Message;
 import network.ChatSocket;
 
@@ -17,8 +15,7 @@ public class Server implements Runnable {
     List<ChatSocket> sockets = new ArrayList<>();
     ArrayBlockingQueue<Message> messages = new ArrayBlockingQueue<>(50);
     Logging _logger;
-    final MessageProcessors messageProcessors = MessageProcessors.getInstance();
-    
+
     public Server(int port) {
         _logger = new Logging("Server"+port);
         this.port = port;
@@ -43,13 +40,9 @@ public class Server implements Runnable {
         while(running) {
             try {
                 Message m = messages.take();
-                String decrypted = messageProcessors.processOutgoingMessage(m.getString()); // TODO: authentication before encryption? end-to-end?
-                if(!m.getSocket().isAuthenticated() && Authentication.checkAuthenticationToken(decrypted)) {
-                    m.getSocket().authenticate();
-                }
                 _logger.logInfo("Distribute message: " + m.getString());
                 for(ChatSocket skt : this.sockets) {
-                    if(skt.isConnected() && skt.isAuthenticated()) {
+                    if(skt.isConnected()) {
                         skt.send(m);
                     }
                 }

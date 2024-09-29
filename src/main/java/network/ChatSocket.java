@@ -23,13 +23,6 @@ public class ChatSocket implements Runnable {
         this.messageQueue = messageQueue;
     }
 
-    public void authenticate() {
-        this.authenticated = true;
-    }
-    public boolean isAuthenticated() {
-        return authenticated;
-    }
-
     public boolean isConnected() {
         return connected;
     }

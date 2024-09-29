@@ -51,9 +51,9 @@ public class MainWindow extends JFrame {
 
     public void addMessage(String message) {
         try {
-            StyleConstants.setForeground(textPaneStyle, messages.MessageColorPlugin.getInstance().getColor(message));
+            StyleConstants.setForeground(textPaneStyle, Color.red);
             StyledDocument doc = textPane.getStyledDocument();
-            doc.insertString(doc.getLength(), messages.MessageColorPlugin.getInstance().stripColor(message) + "\n",textPaneStyle);
+            doc.insertString(doc.getLength(), message + "\n",textPaneStyle);
         }
         catch (Exception e){}
     }
