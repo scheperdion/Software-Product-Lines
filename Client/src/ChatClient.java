@@ -15,8 +15,8 @@ public class ChatClient {
         processors.addMessageProcessor(authentication);
         processors.addMessageProcessor(logging);
 //        processors.addMessageProcessor(vigenere);
-//        processors.addMessageProcessor(rot13);
-//        processors.addMessageProcessor(colors);
+        processors.addMessageProcessor(rot13);
+        processors.addMessageProcessor(colors);
 
 
         Client c = new Client(0);

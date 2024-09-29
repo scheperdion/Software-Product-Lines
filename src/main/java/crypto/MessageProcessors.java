@@ -31,6 +31,7 @@ public class MessageProcessors implements IMessageProcessor{
         for (int i = processors.size() - 1; i > 0; i--) { // TODO: reversed because encryption is not commutative
             IMessageProcessor p = processors.get(i);
             result = p.processIncomingMessage(result);
+            if (result == null) { return null; }
         }
         return result;
     }
@@ -40,6 +41,7 @@ public class MessageProcessors implements IMessageProcessor{
         String result = message;
         for(IMessageProcessor p : processors) {
             result = p.processOutgoingMessage(result);
+            if (result == null) { return null; }
         }
         return result;
     }
@@ -49,6 +51,7 @@ public class MessageProcessors implements IMessageProcessor{
         String result = message;
         for(IMessageProcessor p : processors) {
             result = p.processMessageOnServer(result);
+            if (result == null) { return null; }
         }
         return result;
     }
