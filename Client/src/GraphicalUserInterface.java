@@ -1,7 +1,5 @@
-import com.sun.tools.javac.Main;
 import forms.MainWindow;
 import messages.Message;
-import messages.MessageColor;
 import ui.UserInterface;
 
 public class GraphicalUserInterface implements UserInterface {

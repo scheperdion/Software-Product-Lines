@@ -1,5 +1,5 @@
 import messages.Message;
-import messages.MessageColor;
+import messages.MessageColorPlugin;
 import ui.MessageObserver;
 import ui.UserInterface;
 
@@ -13,7 +13,7 @@ public class CommandLineInterface implements MessageObserver, UserInterface {
     }
     @Override
     public void notify(Message message) {
-        System.out.println(MessageColor.getWithColor(message.getString()));
+        System.out.println(MessageColorPlugin.getInstance().getWithColor(message.getString()));
     }
 
     @Override

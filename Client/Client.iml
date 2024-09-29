@@ -7,6 +7,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="Chatter" />
+    <orderEntry type="module" module-name="Chatter" exported="" />
+    <orderEntry type="module" module-name="Software-Product-Lines" />
+    <orderEntry type="module" module-name="PluginInterfaces" />
   </component>
 </module>
