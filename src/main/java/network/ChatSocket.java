@@ -37,8 +37,11 @@ public class ChatSocket implements Runnable {
 
     public void send(Message m) {
         try {
-            socket.getOutputStream().write(messageProcessors.processOutgoingMessage(m.getString()).getBytes(StandardCharsets.UTF_8));
-            socket.getOutputStream().write(new byte[] { '\n' });
+            String processedMessage = messageProcessors.processOutgoingMessage(m.getString());
+            if (processedMessage != null) {
+                socket.getOutputStream().write(processedMessage.getBytes(StandardCharsets.UTF_8));
+                socket.getOutputStream().write(new byte[] { '\n' });
+            }
             //System.out.println("WRITTEN MESSAGE:" + m.getString());
         } catch (IOException e) {
             // TODO: log exception?

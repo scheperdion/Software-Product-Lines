@@ -10,7 +10,9 @@ public class ChatServer {
         IMessageProcessor rot13 = pl.loadMessageProcessor(System.getProperty("user.dir") + "/Plugins/target/classes/Rot13.class");
         IMessageProcessor colors = pl.loadMessageProcessor(System.getProperty("user.dir") + "/Plugins/target/classes/Colors.class");
         IMessageProcessor vigenere = pl.loadMessageProcessor(System.getProperty("user.dir") + "/Plugins/target/classes/Vigenere.class");
-        processors.addMessageProcessor(rot13);
+        IMessageProcessor authentication = pl.loadMessageProcessor(System.getProperty("user.dir") + "/Plugins/target/classes/Authentication.class");
+//        processors.addMessageProcessor(rot13);
+//        processors.addMessageProcessor(authentication);
 //        processors.addMessageProcessor(vigenere);
 //        processors.addMessageProcessor(colors);
 

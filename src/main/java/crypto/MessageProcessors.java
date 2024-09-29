@@ -39,7 +39,7 @@ public class MessageProcessors implements IMessageProcessor{
     public String processOutgoingMessage(String message) {
         String result = message;
         for(IMessageProcessor p : processors) {
-            result = p.processIncomingMessage(result);
+            result = p.processOutgoingMessage(result);
         }
         return result;
     }

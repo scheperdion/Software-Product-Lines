@@ -10,9 +10,11 @@ public class ChatClient {
         IMessageProcessor rot13 = pl.loadMessageProcessor(System.getProperty("user.dir") + "/Plugins/target/classes/Rot13.class");
         IMessageProcessor vigenere = pl.loadMessageProcessor(System.getProperty("user.dir") + "/Plugins/target/classes/Vigenere.class");
         IMessageProcessor colors = pl.loadMessageProcessor(System.getProperty("user.dir") + "/Plugins/target/classes/Colors.class");
+        IMessageProcessor authentication = pl.loadMessageProcessor(System.getProperty("user.dir") + "/Plugins/target/classes/Authentication.class");
+        processors.addMessageProcessor(authentication);
 //        processors.addMessageProcessor(vigenere);
-        processors.addMessageProcessor(rot13);
-        processors.addMessageProcessor(colors);
+//        processors.addMessageProcessor(rot13);
+//        processors.addMessageProcessor(colors);
 
 
         Client c = new Client(0);
@@ -21,7 +23,6 @@ public class ChatClient {
         c.connect(6554);
         t.start();
 
-        c.authenticate();
         ui.mainLoop();
 
     }

@@ -1,4 +1,3 @@
-import crypto.Authentication;
 import crypto.MessageProcessors;
 import messages.Message;
 import network.ChatSocket;
@@ -39,10 +38,6 @@ public class Client implements Runnable{
         catch(Exception e) {
             _logger.logSevere("Exception occurred during connecting: " + e.getMessage());
         }
-    }
-
-    public void authenticate() {
-        send(new Message(Authentication.getAuthenticationToken(), null));
     }
 
     public void send(Message m) {
