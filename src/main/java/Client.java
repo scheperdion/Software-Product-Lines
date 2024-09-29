@@ -1,5 +1,5 @@
 import crypto.Authentication;
-import crypto.Encryption;
+import crypto.MessageProcessors;
 import messages.Message;
 import network.ChatSocket;
 import ui.MessageObserver;
@@ -14,7 +14,7 @@ public class Client implements Runnable{
     boolean running = false;
     ArrayBlockingQueue<Message> messages = new ArrayBlockingQueue<Message>(50);
     private final Logging _logger;
-    final Encryption encryption = new Encryption();
+    final MessageProcessors messageProcessors = MessageProcessors.getInstance();
     final List<MessageObserver> messageObservers;
 
     public Client(int id) {
@@ -54,7 +54,8 @@ public class Client implements Runnable{
         running = true;
         while(running) {
             try {
-                Message m = encryption.decrypt(messages.take());
+                Message m = messages.take();
+                m.setString(messageProcessors.processIncomingMessage(m.getString()));
                 _logger.logInfo("Message received: " + m.getString());
                 for (MessageObserver o : this.messageObservers) {
                     o.notify(m);
