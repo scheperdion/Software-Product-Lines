@@ -28,7 +28,7 @@ public class MessageProcessors implements IMessageProcessor{
     @Override
     public String processIncomingMessage(String message) {
         String result = message;
-        for (int i = processors.size() - 1; i > 0; i--) { // TODO: reversed because encryption is not commutative
+        for (int i = processors.size() - 1; i >= 0; i--) {
             IMessageProcessor p = processors.get(i);
             result = p.processIncomingMessage(result);
             if (result == null) { return null; }
