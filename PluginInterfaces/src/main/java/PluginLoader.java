@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 
 public class PluginLoader extends ClassLoader{
 
-    private Object loadPlugin(String fileName) {
+    public Object loadPlugin(String fileName) {
 
         try {
             byte[] classData = Files.readAllBytes(Paths.get(fileName));

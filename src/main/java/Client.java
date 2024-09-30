@@ -1,28 +1,31 @@
 import crypto.Authentication;
 import crypto.Encryption;
+import interfaces.IMessageReceiver;
 import messages.Message;
 import network.ChatSocket;
-import ui.MessageObserver;
 
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 
-public class Client implements Runnable{
+import interfaces.IMessageSender;
+import interfaces.IMessageReceiver;
+
+public class Client implements Runnable, IMessageSender {
     private ChatSocket socket;
     boolean running = false;
     ArrayBlockingQueue<Message> messages = new ArrayBlockingQueue<Message>(50);
     private final Logging _logger;
     final Encryption encryption = new Encryption();
-    final List<MessageObserver> messageObservers;
+    final List<IMessageReceiver> messageObservers;
 
     public Client(int id) {
         _logger = new Logging("Client" + id);
         this.messageObservers = new ArrayList<>();
     }
 
-    public void addObserver(MessageObserver o) {
+    public void addObserver(IMessageReceiver o) {
         this.messageObservers.add(o);
     }
 
@@ -42,13 +45,9 @@ public class Client implements Runnable{
     }
 
     public void authenticate() {
-        send(new Message(Authentication.getAuthenticationToken(), null));
+        send(Authentication.getAuthenticationToken());
     }
 
-    public void send(Message m) {
-        _logger.logInfo("Message send: " + m.getString());
-        socket.send(m);
-    }
     @Override
     public void run() {
         running = true;
@@ -56,8 +55,8 @@ public class Client implements Runnable{
             try {
                 Message m = encryption.decrypt(messages.take());
                 _logger.logInfo("Message received: " + m.getString());
-                for (MessageObserver o : this.messageObservers) {
-                    o.notify(m);
+                for (IMessageReceiver o : this.messageObservers) {
+                    o.receive(m.getString());
                 }
             } catch (InterruptedException e) {
                 _logger.logSevere("Exception occurred: " + e.getMessage());
@@ -65,5 +64,12 @@ public class Client implements Runnable{
             }
 
         }
+    }
+
+    @Override
+    public void send(String s) {
+        Message m = new Message(s,socket);
+        _logger.logInfo("Message send: " + m.getString());
+        socket.send(m);
     }
 }
