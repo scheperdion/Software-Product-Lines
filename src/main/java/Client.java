@@ -1,5 +1,5 @@
-import crypto.Authentication;
-import crypto.Encryption;
+//import crypto.Authentication;
+//import crypto.Encryption;
 import interfaces.IMessageReceiver;
 import crypto.MessageProcessors;
 import messages.Message;
@@ -17,8 +17,8 @@ public class Client implements Runnable, IMessageSender {
     private ChatSocket socket;
     boolean running = false;
     ArrayBlockingQueue<Message> messages = new ArrayBlockingQueue<Message>(50);
-    private final Logging _logger;
-    final Encryption encryption = new Encryption();
+//    private final Logging _logger;
+//    final Encryption encryption = new Encryption();
     final List<IMessageReceiver> messageObservers;
     final MessageProcessors messageProcessors = MessageProcessors.getInstance();
 
@@ -53,7 +53,7 @@ public class Client implements Runnable, IMessageSender {
                 Message m = messages.take();
                 m.setString(messageProcessors.processIncomingMessage(m.getString()));
                 for (IMessageReceiver o : this.messageObservers) {
-                    o.receive(m);
+                    o.receive(m.getString());
                 }
             } catch (InterruptedException e) {
                 System.out.println("Exception occurred: " + e.getMessage());
@@ -66,7 +66,7 @@ public class Client implements Runnable, IMessageSender {
     @Override
     public void send(String s) {
         Message m = new Message(s,socket);
-        _logger.logInfo("Message send: " + m.getString());
+//        _logger.logInfo("Message send: " + m.getString());
         socket.send(m);
     }
 }

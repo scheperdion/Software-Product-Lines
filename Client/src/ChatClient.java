@@ -1,5 +1,5 @@
-import interfaces.IMessageColor;
-import messages.MessageColorPlugin;
+//import interfaces.IMessageColor;
+//import messages.MessageColorPlugin;
 //import ui.UserInterface;
 
 import interfaces.IUserInterface;
@@ -18,13 +18,16 @@ public class ChatClient {
         IMessageProcessor logging = pl.loadMessageProcessor(System.getProperty("user.dir") + "/Plugins/target/classes/Logging.class");
         processors.addMessageProcessor(authentication);
         processors.addMessageProcessor(logging);
+        processors.addMessageProcessor(colors);
 //        processors.addMessageProcessor(vigenere);
         processors.addMessageProcessor(rot13);
-        processors.addMessageProcessor(colors);
 
 
         Client c = new Client(0);
-        UserInterface ui = new CommandLineInterface(c); //new CommandLineInterface(c);
+        IUserInterface ui = (IUserInterface) pl.loadPlugin(System.getProperty("user.dir") + "/Plugins/target/classes/GUI.class");
+        c.addObserver(ui);
+//        ui.addMessageColor(color);
+        ui.addMessageSender(c);
         Thread t = new Thread(c);
         c.connect(6554);
         t.start();

@@ -1,4 +1,4 @@
-import interfaces.IMessageColor;
+//import interfaces.IMessageColor;
 import interfaces.IUserInterface;
 import interfaces.IMessageSender;
 
@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 
 public class GUI extends JFrame implements IUserInterface {
     private IMessageSender _messageSender;
-    private IMessageColor _messageColor;
+//    private IMessageColor _messageColor;
 
     private JTextPane textPane;
     private JPanel panel1;
@@ -52,17 +52,20 @@ public class GUI extends JFrame implements IUserInterface {
         _messageSender = ms;
     }
 
-    @Override
-    public void addMessageColor(IMessageColor mc) {
-        _messageColor = mc;
-    }
+//    @Override
+//    public void addMessageColor(IMessageColor mc) {
+//        _messageColor = mc;
+//    }
 
     @Override
-    public void receive(String m) {
+    public void receive(String s) {
         try {
-            StyleConstants.setForeground(textPaneStyle, _messageColor.getColor(m));
+            String m = Colors.stripColorCode(s);
+            Color c = Colors.getColor(s);
+            StyleConstants.setForeground(textPaneStyle, c);
+            StyleConstants.setForeground(textPaneStyle, c);
             StyledDocument doc = textPane.getStyledDocument();
-            doc.insertString(doc.getLength(), _messageColor.stripColor(m) + "\n",textPaneStyle);
+            doc.insertString(doc.getLength(), m + "\n",textPaneStyle);
         }
         catch (Exception e){}
     }

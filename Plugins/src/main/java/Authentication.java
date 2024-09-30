@@ -1,4 +1,6 @@
-public class Authentication implements interfaces.IMessageProcessor {
+import interfaces.IMessageProcessor;
+
+public class Authentication implements IMessageProcessor {
 
     private boolean authenticated = false;
 
