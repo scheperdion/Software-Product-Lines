@@ -1,6 +1,7 @@
 import crypto.Authentication;
 import crypto.Encryption;
 import interfaces.IMessageReceiver;
+import crypto.MessageProcessors;
 import messages.Message;
 import network.ChatSocket;
 
@@ -19,9 +20,9 @@ public class Client implements Runnable, IMessageSender {
     private final Logging _logger;
     final Encryption encryption = new Encryption();
     final List<IMessageReceiver> messageObservers;
+    final MessageProcessors messageProcessors = MessageProcessors.getInstance();
 
     public Client(int id) {
-        _logger = new Logging("Client" + id);
         this.messageObservers = new ArrayList<>();
     }
 
@@ -40,12 +41,8 @@ public class Client implements Runnable, IMessageSender {
             t.start();
         }
         catch(Exception e) {
-            _logger.logSevere("Exception occurred during connecting: " + e.getMessage());
+            System.out.println("Exception occurred during connecting: " + e.getMessage());
         }
-    }
-
-    public void authenticate() {
-        send(Authentication.getAuthenticationToken());
     }
 
     @Override
@@ -53,13 +50,13 @@ public class Client implements Runnable, IMessageSender {
         running = true;
         while(running) {
             try {
-                Message m = encryption.decrypt(messages.take());
-                _logger.logInfo("Message received: " + m.getString());
+                Message m = messages.take();
+                m.setString(messageProcessors.processIncomingMessage(m.getString()));
                 for (IMessageReceiver o : this.messageObservers) {
-                    o.receive(m.getString());
+                    o.receive(m);
                 }
             } catch (InterruptedException e) {
-                _logger.logSevere("Exception occurred: " + e.getMessage());
+                System.out.println("Exception occurred: " + e.getMessage());
                 throw new RuntimeException(e);
             }
 
