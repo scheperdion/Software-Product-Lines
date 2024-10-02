@@ -7,8 +7,12 @@
 	<feature name="Vigenere"/>
 	<feature name="Authentication"/>
 	<feature automatic="selected" name="UI"/>
-	<feature manual="selected" name="CL"/>
+	<feature automatic="selected" manual="selected" name="CL"/>
 	<feature automatic="unselected" name="GUI"/>
 	<feature name="Color"/>
 	<feature name="Log"/>
+	<feature name="Sound"/>
+	<feature automatic="selected" name="Type"/>
+	<feature manual="selected" name="Server"/>
+	<feature automatic="unselected" name="Client"/>
 </configuration>

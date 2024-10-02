@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <featureModel>
 	<properties>
+		<graphics key="autolayoutconstraints" value="false"/>
+		<graphics key="legendautolayout" value="true"/>
 		<graphics key="showconstraints" value="true"/>
 		<graphics key="showshortnames" value="false"/>
 		<graphics key="layout" value="horizontal"/>
+		<graphics key="showcollapsedconstraints" value="true"/>
 		<graphics key="legendhidden" value="false"/>
 		<graphics key="layoutalgorithm" value="1"/>
-		<graphics key="autolayoutconstraints" value="false"/>
-		<graphics key="legendautolayout" value="true"/>
-		<graphics key="showcollapsedconstraints" value="true"/>
 	</properties>
 	<struct>
 		<and mandatory="true" name="Chatter">
@@ -27,6 +27,19 @@
 			</alt>
 			<feature name="Color"/>
 			<feature name="Log"/>
+			<feature name="Sound"/>
+			<alt abstract="true" mandatory="true" name="Type">
+				<feature name="Server"/>
+				<feature name="Client"/>
+			</alt>
 		</and>
 	</struct>
+	<constraints>
+		<rule>
+			<imp>
+				<var>Server</var>
+				<var>CL</var>
+			</imp>
+		</rule>
+	</constraints>
 </featureModel>
