@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration>
+	<feature automatic="selected" name="Chatter"/>
+	<feature name="Security"/>
+	<feature name="Encryption"/>
+	<feature name="Rot13"/>
+	<feature name="Vigenere"/>
+	<feature name="Authentication"/>
+	<feature automatic="selected" name="UI"/>
+	<feature manual="selected" name="CL"/>
+	<feature automatic="unselected" name="GUI"/>
+	<feature name="Color"/>
+	<feature name="Log"/>
+</configuration>
