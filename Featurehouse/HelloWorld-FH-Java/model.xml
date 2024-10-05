@@ -2,7 +2,8 @@
 <featureModel>
 	<properties>
 		<graphics key="autolayoutconstraints" value="false"/>
-		<graphics key="legendautolayout" value="true"/>
+		<graphics key="legendposition" value="804,46"/>
+		<graphics key="legendautolayout" value="false"/>
 		<graphics key="showconstraints" value="true"/>
 		<graphics key="showshortnames" value="false"/>
 		<graphics key="layout" value="horizontal"/>
@@ -13,6 +14,10 @@
 	<struct>
 		<and mandatory="true" name="Chatter">
 			<graphics key="collapsed" value="false"/>
+			<alt abstract="true" mandatory="true" name="Type">
+				<feature name="Server"/>
+				<feature name="Client"/>
+			</alt>
 			<or abstract="true" name="Security">
 				<or abstract="true" name="Encryption">
 					<graphics key="collapsed" value="false"/>
@@ -28,10 +33,7 @@
 			<feature name="Color"/>
 			<feature name="Log"/>
 			<feature name="Sound"/>
-			<alt abstract="true" mandatory="true" name="Type">
-				<feature name="Server"/>
-				<feature name="Client"/>
-			</alt>
+			<feature mandatory="true" name="Loop"/>
 		</and>
 	</struct>
 	<constraints>

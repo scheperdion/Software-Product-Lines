@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configuration>
 	<feature automatic="selected" name="Chatter"/>
+	<feature automatic="selected" name="Type"/>
+	<feature manual="selected" name="Server"/>
+	<feature automatic="unselected" name="Client"/>
 	<feature name="Security"/>
 	<feature name="Encryption"/>
 	<feature name="Rot13"/>
@@ -12,7 +15,5 @@
 	<feature name="Color"/>
 	<feature name="Log"/>
 	<feature name="Sound"/>
-	<feature automatic="selected" name="Type"/>
-	<feature manual="selected" name="Server"/>
-	<feature automatic="unselected" name="Client"/>
+	<feature name="Loop"/>
 </configuration>

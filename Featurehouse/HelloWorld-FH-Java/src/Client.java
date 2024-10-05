@@ -1,34 +1,49 @@
 //import crypto.Authentication;
 //import crypto.Encryption;
-import interfaces.IMessageReceiver;
-import crypto.MessageProcessors;
-import messages.Message;
-import network.ChatSocket;
+import interfaces.IMessageReceiver; 
+import crypto.MessageProcessors; 
+import messages.Message; 
+import network.ChatSocket; 
 
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
+import java.net.Socket; 
+import java.util.ArrayList; 
+import java.util.List; 
+import java.util.concurrent.ArrayBlockingQueue; 
 
-import interfaces.IMessageSender;
-import interfaces.IMessageReceiver;
+import interfaces.IMessageSender; 
+import interfaces.IMessageReceiver; 
 
-public class Client implements Runnable, IMessageSender {
+public  class  Client  implements Runnable, IMessageSender {
+	
     private ChatSocket socket;
+
+	
     boolean running = false;
+
+	
     ArrayBlockingQueue<Message> messages = new ArrayBlockingQueue<Message>(50);
+
+	
 //    private final Logging _logger;
 //    final Encryption encryption = new Encryption();
     final List<IMessageReceiver> messageObservers;
+
+	
     final MessageProcessors messageProcessors = MessageProcessors.getInstance();
+
+	
 
     public Client(int id) {
 //        this.messageObservers = new ArrayList<>();
     }
 
+	
+
     public void addObserver(IMessageReceiver o) {
         this.messageObservers.add(o);
     }
+
+	
 
     public void connect(int port) {
         try {
@@ -44,6 +59,8 @@ public class Client implements Runnable, IMessageSender {
             System.out.println("Exception occurred during connecting: " + e.getMessage());
         }
     }
+
+	
 
     @Override
     public void run() {
@@ -63,10 +80,14 @@ public class Client implements Runnable, IMessageSender {
         }
     }
 
+	
+
     @Override
     public void send(String s) {
         Message m = new Message(s,socket);
 //        _logger.logInfo("Message send: " + m.getString());
         socket.send(m);
     }
+
+
 }

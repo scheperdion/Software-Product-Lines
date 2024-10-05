@@ -1,1 +1,3 @@
-*.java
+/Test.java
+/.gitignore
+/Encryption.java

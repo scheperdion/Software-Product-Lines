@@ -1,26 +1,39 @@
-import crypto.MessageProcessors;
-import messages.Message;
-import network.ChatSocket;
+import crypto.MessageProcessors; 
+import messages.Message; 
+import network.ChatSocket; 
 
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
+import java.io.IOException; 
+import java.net.ServerSocket; 
+import java.net.Socket; 
+import java.util.ArrayList; 
+import java.util.List; 
+import java.util.concurrent.ArrayBlockingQueue; 
 
-public class Server implements Runnable {
+public  class  Server  implements Runnable {
+	
 
     int port;
+
+	
     boolean running;
+
+	
     List<ChatSocket> sockets = new ArrayList<ChatSocket>();
+
+	
     ArrayBlockingQueue<Message> messages = new ArrayBlockingQueue<Message>(50);
+
+	
     final MessageProcessors messageProcessors = MessageProcessors.getInstance();
+
+	
 
     public Server(int port) {
         System.out.println("Server"+port);
         this.port = port;
     }
+
+	
     public void listen() {
         running = true;
         try {
@@ -36,6 +49,8 @@ public class Server implements Runnable {
             System.out.println("Exception occurred: " + e.getMessage());
         }
     }
+
+	
 
     @Override
     public void run() {
@@ -56,4 +71,6 @@ public class Server implements Runnable {
 
         }
     }
+
+
 }
