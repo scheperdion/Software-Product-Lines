@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configuration>
 	<feature automatic="selected" name="Chatter"/>
-	<feature automatic="selected" name="Type"/>
-	<feature automatic="unselected" name="Server"/>
-	<feature manual="selected" name="Client"/>
-	<feature automatic="selected" name="Security"/>
-	<feature automatic="selected" name="Encryption"/>
-	<feature manual="selected" name="Rot13"/>
-	<feature manual="selected" name="Vigenere"/>
+	<feature name="Security"/>
+	<feature name="Encryption"/>
+	<feature name="Rot13"/>
+	<feature name="Vigenere"/>
 	<feature name="Authentication"/>
 	<feature automatic="selected" name="UI"/>
 	<feature manual="selected" name="CL"/>

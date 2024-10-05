@@ -1,3 +1,6 @@
-/Test.java
+/Client.java
 /.gitignore
-/Encryption.java
+/Server.java
+/ChatClient.java
+/UserInterface.java
+/ChatServer.java

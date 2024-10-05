@@ -1,17 +1,12 @@
-//import crypto.Authentication;
-//import crypto.Encryption;
-import interfaces.IMessageReceiver; 
-import crypto.MessageProcessors; 
-import messages.Message; 
 import network.ChatSocket; 
+import messages.Message; 
+import messages.MessageProcessor; 
 
 import java.net.Socket; 
 import java.util.ArrayList; 
 import java.util.List; 
 import java.util.concurrent.ArrayBlockingQueue; 
 
-import interfaces.IMessageSender; 
-import interfaces.IMessageReceiver; 
 
 public  class  Client  implements Runnable, IMessageSender {
 	
@@ -29,12 +24,12 @@ public  class  Client  implements Runnable, IMessageSender {
     final List<IMessageReceiver> messageObservers;
 
 	
-    final MessageProcessors messageProcessors = MessageProcessors.getInstance();
+    final MessageProcessor messageProcessors = new MessageProcessor();
 
 	
 
     public Client(int id) {
-//        this.messageObservers = new ArrayList<>();
+        this.messageObservers = new ArrayList<IMessageReceiver>();
     }
 
 	

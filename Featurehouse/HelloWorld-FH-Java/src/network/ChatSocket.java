@@ -1,12 +1,12 @@
 package network; 
 
-import crypto.MessageProcessors; 
 import messages.Message; 
 
 import java.io.*; 
 import java.net.Socket; 
 import java.nio.charset.StandardCharsets; 
 import java.util.Queue; 
+import messages.MessageProcessor; 
 
 public  class  ChatSocket  implements Runnable {
 	
@@ -26,10 +26,11 @@ public  class  ChatSocket  implements Runnable {
 
 	
 
-    private final MessageProcessors messageProcessors = MessageProcessors.getInstance();
+    final MessageProcessor messageProcessors = new MessageProcessor();
 
 	
 
+    
     public ChatSocket(int id, Socket socket, Queue<Message> messageQueue) {
         this.id = id;
         this.socket = socket;
@@ -37,7 +38,8 @@ public  class  ChatSocket  implements Runnable {
     }
 
 	
-
+    
+    
     public boolean isConnected() {
         return connected;
     }

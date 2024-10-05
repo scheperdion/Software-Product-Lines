@@ -1,5 +1,6 @@
 import crypto.MessageProcessors; 
 import messages.Message; 
+import messages.MessageProcessor; 
 import network.ChatSocket; 
 
 import java.io.IOException; 
@@ -24,7 +25,7 @@ public  class  Server  implements Runnable {
     ArrayBlockingQueue<Message> messages = new ArrayBlockingQueue<Message>(50);
 
 	
-    final MessageProcessors messageProcessors = MessageProcessors.getInstance();
+    final MessageProcessor messageProcessors = new MessageProcessor();
 
 	
 
