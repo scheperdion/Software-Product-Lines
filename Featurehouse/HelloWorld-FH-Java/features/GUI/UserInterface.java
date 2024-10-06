@@ -55,15 +55,17 @@ public class UserInterface extends JFrame implements IUserInterface{
     public void addMessageSender(IMessageSender ms) {
         _messageSender = ms;
     }
+    
+    @Override
+    public void setColor(Color c) {
+        StyleConstants.setForeground(textPaneStyle, c);
+        StyleConstants.setForeground(textPaneStyle, c);
+    }
 
 
     @Override
-    public void receive(String s) {
+    public void receive(String m) {
         try {
-            String m = ColorMessage.stripColorCode(s);
-            Color c = ColorMessage.getColor(s);
-            StyleConstants.setForeground(textPaneStyle, c);
-            StyleConstants.setForeground(textPaneStyle, c);
             StyledDocument doc = textPane.getStyledDocument();
             doc.insertString(doc.getLength(), m + "\n",textPaneStyle);
         }
