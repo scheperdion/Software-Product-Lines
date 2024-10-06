@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List; 
 import java.util.concurrent.ArrayBlockingQueue; 
 
+import interfaces.IMessageReceiver; 
+import interfaces.IMessageSender; 
 
 public  class  Client  implements Runnable, IMessageSender {
 	

@@ -1,4 +1,4 @@
-
+import interfaces.IUserInterface;
 
 public class ChatClient {
     public static void main(String[] args) throws InterruptedException {
@@ -18,7 +18,7 @@ public class ChatClient {
 
 
         Client c = new Client(0);
-        UserInterface ui = new UserInterface();
+        IUserInterface ui = new UserInterface();
         c.addObserver(ui);
 //        ui.addMessageColor(color);
         ui.addMessageSender(c);

@@ -1,10 +1,11 @@
-//import interfaces.IUserInterface;
-////import interfaces.IMessageColor;
-//import interfaces.IMessageSender;
+
+import interfaces.IUserInterface;
+import interfaces.IMessageReceiver;
+import interfaces.IMessageSender;
 
 import java.util.Scanner;
 
-public class UserInterface implements IMessageReceiver{
+public class UserInterface implements IUserInterface{
     private IMessageSender _messageSender;
 //    private IMessageColor _messageColor;
 

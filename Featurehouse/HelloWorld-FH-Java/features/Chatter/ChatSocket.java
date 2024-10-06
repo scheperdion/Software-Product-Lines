@@ -1,5 +1,3 @@
-
-
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
@@ -12,7 +10,7 @@ public class ChatSocket implements Runnable {
     private Queue<Message> messageQueue;
     private boolean connected = false;
 
-    final MessageProcessor messageProcessors = new MessageProcessor();
+    final MessageProcessor messageProcessor = new MessageProcessor();
 
     
     public ChatSocket(int id, Socket socket, Queue<Message> messageQueue) {
@@ -36,7 +34,7 @@ public class ChatSocket implements Runnable {
 
     public void send(Message m) {
         try {
-            String processedMessage = messageProcessors.processOutgoingMessage(m.getString());
+            String processedMessage = messageProcessor.processOutgoingMessage(m.getString());
             if (processedMessage != null) {
                 socket.getOutputStream().write(processedMessage.getBytes(StandardCharsets.UTF_8));
                 socket.getOutputStream().write(new byte[] { '\n' });

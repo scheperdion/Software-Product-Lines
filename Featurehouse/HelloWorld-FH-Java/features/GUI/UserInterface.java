@@ -7,8 +7,11 @@ import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.util.Scanner;
 
+import interfaces.IUserInterface;
+import interfaces.IMessageSender;
 
-public class UserInterface extends JFrame implements IMessageReceiver{
+
+public class UserInterface extends JFrame implements IUserInterface{
     private IMessageSender _messageSender;
 //    private IMessageColor _messageColor;
 

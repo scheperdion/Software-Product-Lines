@@ -1,6 +1,3 @@
-import crypto.MessageProcessors;
-
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -8,13 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 
+
 public class Server implements Runnable {
 
     int port;
     boolean running;
     List<ChatSocket> sockets = new ArrayList<ChatSocket>();
     ArrayBlockingQueue<Message> messages = new ArrayBlockingQueue<Message>(50);
-    final MessageProcessor messageProcessors = new MessageProcessor();
+    final MessageProcessor messageProcessor = new MessageProcessor();
 
     public Server(int port) {
         System.out.println("Server"+port);
@@ -41,7 +39,7 @@ public class Server implements Runnable {
         while(running) {
             try {
                 Message m = messages.take();
-                m.setString(messageProcessors.processMessageOnServer(m.getString()));
+                m.setString(messageProcessor.processMessageOnServer(m.getString()));
                 for(ChatSocket skt : this.sockets) {
                     if(skt.isConnected()) {
                         skt.send(m);

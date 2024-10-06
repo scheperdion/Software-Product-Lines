@@ -1,4 +1,4 @@
-
+import interfaces.IUserInterface; 
 
 public  class  ChatClient {
 	
@@ -19,7 +19,7 @@ public  class  ChatClient {
 
 
         Client c = new Client(0);
-        UserInterface ui = new UserInterface();
+        IUserInterface ui = new UserInterface();
         c.addObserver(ui);
 //        ui.addMessageColor(color);
         ui.addMessageSender(c);
