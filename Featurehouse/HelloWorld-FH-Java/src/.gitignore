@@ -1,6 +1,3 @@
-/Client.java
+/ChatSocket.java
 /.gitignore
-/Server.java
-/ChatClient.java
-/UserInterface.java
-/ChatServer.java
+/MessageProcessor.java

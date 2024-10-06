@@ -1,34 +1,18 @@
-package network; 
 
-import messages.Message; 
 
-import java.io.*; 
-import java.net.Socket; 
-import java.nio.charset.StandardCharsets; 
-import java.util.Queue; 
-import messages.MessageProcessor; 
+import java.io.*;
+import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.util.Queue;
 
-public  class  ChatSocket  implements Runnable {
-	
+public class ChatSocket implements Runnable {
     private int id;
-
-	
     private boolean authenticated = false;
-
-	
     private Socket socket;
-
-	
     private Queue<Message> messageQueue;
-
-	
     private boolean connected = false;
 
-	
-
     final MessageProcessor messageProcessors = new MessageProcessor();
-
-	
 
     
     public ChatSocket(int id, Socket socket, Queue<Message> messageQueue) {
@@ -36,27 +20,19 @@ public  class  ChatSocket  implements Runnable {
         this.socket = socket;
         this.messageQueue = messageQueue;
     }
-
-	
     
     
     public boolean isConnected() {
         return connected;
     }
 
-	
-
     public Socket getSocket() {
         return this.socket;
     }
 
-	
-
     public int getId() {
         return id;
     }
-
-	
 
     public void send(Message m) {
         try {
@@ -72,8 +48,6 @@ public  class  ChatSocket  implements Runnable {
             connected = false;
         }
     }
-
-	
 
     @Override
     public void run() {
@@ -97,6 +71,4 @@ public  class  ChatSocket  implements Runnable {
         }
 
     }
-
-
 }

@@ -2,14 +2,19 @@
 ////import interfaces.IMessageColor;
 //import interfaces.IMessageSender;
 
-import java.util.Scanner;
+import java.util.Scanner; 
 
-public class UserInterface implements IMessageReceiver{
+public  class  UserInterface  implements IMessageReceiver {
+	
     private IMessageSender _messageSender;
+
+	
 //    private IMessageColor _messageColor;
 
     public UserInterface(){
     }
+
+	
 
     public void mainLoop() {
         final Scanner scanner = new Scanner(System.in);
@@ -19,9 +24,13 @@ public class UserInterface implements IMessageReceiver{
         }
     }
 
+	
+
     public void addMessageSender(IMessageSender ms) {
         _messageSender = ms;
     }
+
+	
 
 
     @Override
@@ -29,4 +38,6 @@ public class UserInterface implements IMessageReceiver{
         System.out.println(m);
 //        System.out.println(_messageColor.getWithColor(m));
     }
+
+
 }
