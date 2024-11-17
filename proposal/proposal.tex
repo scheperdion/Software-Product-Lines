@@ -1,5 +1,7 @@
 \documentclass[]{article}
+\usepackage{graphicx}
 
+\usepackage[a4paper, total={6in, 8in}]{geometry}
 %opening
 \title{Severe Weather Alert System}
 \author{Dion Scheper, Terence Beijloos, Bart van Nimwegen}
@@ -9,31 +11,62 @@
 \maketitle
 
 \section{Context/Background}
-For the course software product lines we are developing a software product line. 
+We are building a severe weather alert application that can be used by governments to alert civilians of incoming weather events. In the case of extremities like tsunami's, this system allows civilians to prepare for the possibly dangerous event. An efficient alerting system is essential to survive such events.
+
+The flexibility of the SPL approach will ensure that the solution can evolve as new weather patterns emerge, new communication channels are introduced, or different geographic areas require specific adaptations.
 
 \section{Motivation}
 % why is it a good idea to develop a product line / conduct your proposed project etc.)?
 Creating a software product line for a severe weather app is a compelling idea because the domain offers significant variability, with many weather-related features like temperature, precipitation, and wind that can be tailored to different user needs. 
+
 Developing a minimum viable product is relatively straightforward, as the app could start with core functionalities like basic alerts for severe weather and expand later. Additionally, the project offers an opportunity to tackle the optional feature problem, where weather properties may seem independent but could have hidden dependencies during implementation. 
+
 Finally, the app isn't heavily reliant on external services; weather data can easily be mocked during development, making it easier to test and iterate.
 
 \section{Methodology}
 % This question can entail a software development methodology (used processes for working in your team, tools etc.) and/or research methodology (empirical research, design science research…)
+In this case we will be following a software development methodology. We will use these tools and processes:
 \begin{itemize}
-	\item agile / remote
-	\item git / github for code sharing
-	\item featureIDE
-	\item optional: include aspectJ if possible
+	\item agile / remote\\
+		  We will work mostly remote, hosting interactive standups on discord where we can share our screens and discuss possible problems.
+	\item git / github for version control of code\\
+		  This facilitates the version control so we can work simultaneously and merge code later.
+	\item featureIDE\\
+		  We now have some experience with eclipse and the FeatureHouse plugin. This is a good starting point for our project.
+	\item optional: include aspectJ if possible\\
+		  The aspect oriented examples from the lectures were very interesting and seem to add a lot of value. If we have the chance we want to integrate this into our project.
 \end{itemize}
 
 \section{Deliverables}
 %For example, what features do you plan to implement, what kind of variability mechanisms will be used and why, etc.
+We plan to use the following variability.
 \begin{itemize}
-	\item 
+	\item configuration file
+	\item translations
+	\item compile time feature selection
+	\item feature selection by the user
 \end{itemize}
+
+And we have drafted a feature model.
+\begin{figure}[ht]
+	%\includegraphics[width=\linewidth]{featurehouse}
+	\makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{featurehouse}}
+	
+\end{figure}
+
 
 
 \section{Area's of responsibility}
+We are working this project with three people. Everyone will have their own area of responsibility, for example it does not make sense to let two people start on the events as most events will share some base code.
 
+
+\begin{itemize}
+	\item Dion\\
+	      Client/Server code to let the application interact and be notified.
+	\item Terrence\\
+	      Events business logic
+	\item Bart\\
+	      UI elements starting with the alert UI (simple)
+\end{itemize}
 
 \end{document}
