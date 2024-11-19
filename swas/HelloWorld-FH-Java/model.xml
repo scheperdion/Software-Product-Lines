@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<featureModel>
+	<properties>
+		<calculations key="tautology" value="true"/>
+		<calculations key="auto" value="true"/>
+		<graphics key="showconstraints" value="true"/>
+		<calculations key="redundant" value="true"/>
+		<graphics key="showshortnames" value="false"/>
+		<graphics key="layout" value="horizontal"/>
+		<graphics key="legendhidden" value="false"/>
+		<graphics key="layoutalgorithm" value="1"/>
+		<calculations key="features" value="true"/>
+		<graphics key="autolayoutconstraints" value="false"/>
+		<graphics key="legendautolayout" value="true"/>
+		<graphics key="showcollapsedconstraints" value="true"/>
+		<calculations key="constraints" value="true"/>
+	</properties>
+	<struct>
+		<and abstract="true" mandatory="true" name="SWAS">
+			<and mandatory="true" name="Base">
+				<or name="Location">
+					<feature name="UK"/>
+					<feature name="NL"/>
+				</or>
+			</and>
+			<and abstract="true" name="Events">
+				<graphics key="collapsed" value="false"/>
+				<feature name="Tsunami"/>
+				<feature name="Thunderstorm"/>
+				<feature name="Hurricane"/>
+			</and>
+			<and name="Notifications">
+				<feature name="SMS"/>
+				<feature name="Bluetooth"/>
+				<feature name="Push"/>
+			</and>
+			<alt name="Type">
+				<and name="Client">
+					<alt abstract="true" name="UI">
+						<feature name="Alert_UI"/>
+						<feature name="Extended_UI"/>
+					</alt>
+					<and abstract="true" name="Language">
+						<feature name="English"/>
+						<feature name="Dutch"/>
+					</and>
+				</and>
+				<feature name="Server"/>
+			</alt>
+		</and>
+	</struct>
+	<constraints>
+		<rule>
+			<imp>
+				<var>Events</var>
+				<var>Notifications</var>
+			</imp>
+		</rule>
+	</constraints>
+</featureModel>
