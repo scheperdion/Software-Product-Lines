@@ -2,7 +2,10 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.List; 
+import java.util.List;
+
+import com.google.gson.Gson;
+
 import java.io.*;
 
 
@@ -30,6 +33,8 @@ public class Server implements Runnable {
 	}
 	
 	public void startDataMock() {
+		EventDeserializer ed = new EventDeserializer();
+		Gson gson = ed.getGSON();
 		while(true) {
 			// send data / events to clients at random intervals
 			try {
@@ -37,7 +42,7 @@ public class Server implements Runnable {
 	            for(Socket skt : this.sockets) {
 	            	try {
 		            	PrintWriter output = new PrintWriter(skt.getOutputStream(), true);
-		            	output.println("{newdata}");	
+		            	output.println(gson.toJson(new NoEvent("this is some text")));	
 	            	} catch(IOException e) {
 	            		
 	            	}

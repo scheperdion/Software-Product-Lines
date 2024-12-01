@@ -1,4 +1,4 @@
 
 public interface IClientCallback {
-	void receivedEvent(IEvent event);
+	void receivedEvent(AbstractEvent event);
 }

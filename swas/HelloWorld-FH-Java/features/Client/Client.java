@@ -1,5 +1,8 @@
 import java.net.ServerSocket;
 import java.util.concurrent.BlockingQueue;
+
+import com.google.gson.Gson;
+
 import java.util.concurrent.ArrayBlockingQueue;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -8,19 +11,22 @@ import java.io.*;
 
 public class Client implements Runnable{
 	
-	private BlockingQueue<String> data;
+	private BlockingQueue<AbstractEvent> data;
 	private ArrayList<IClientCallback> callbacks;
+	private EventDeserializer eventDeserializer;
 	
 	public Client() {
-		this.data = new ArrayBlockingQueue<String>(10);
+		this.data = new ArrayBlockingQueue<AbstractEvent>(10);
+		this.callbacks = new ArrayList<IClientCallback>();
+		this.eventDeserializer = new EventDeserializer();
 	}
 	
 	public void addCallback(IClientCallback callback) {
 		this.callbacks.add(callback);
 	}
 	
-	public IEvent getEvent() {
-		return new IEvent() { }; // this.data.poll(); 
+	public AbstractEvent getEvent() {
+		return new AbstractEvent() { }; // this.data.poll(); 
 	}
 	
 	@Override
@@ -31,11 +37,12 @@ public class Client implements Runnable{
 	        //String message = userInput.readLine();
 			//PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
 	        BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			Gson gson = this.eventDeserializer.getGSON();
 	        while(true) {
 	            String serverResponse = input.readLine();
-	            this.data.add(serverResponse);	
+	            this.data.add(gson.fromJson(serverResponse, AbstractEvent.class));	
 	            for(IClientCallback c : this.callbacks ) {
-	            	c.receivedEvent(new IEvent() {});
+	            	c.receivedEvent(new AbstractEvent() {});
 	            }
 	        }
 	        
@@ -55,7 +62,7 @@ public class Client implements Runnable{
 			} catch (InterruptedException e) {
 			  Thread.currentThread().interrupt();
 			}
-			for(String s : this.data) {
+			for(AbstractEvent s : this.data) {
 				System.out.println(s);
 			}
 		}
