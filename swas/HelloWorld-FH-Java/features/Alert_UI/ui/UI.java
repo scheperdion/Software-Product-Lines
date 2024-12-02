@@ -23,7 +23,7 @@ public class UI extends Application {
     public void start(Stage stage) {
         messageListView = new ListView<HBox>();
 
-        String[] messages = { "Thunderstorm!", "UV!" };
+        String[] messages = { "Thunderstorm!", "UVdfsigbsifdb!" };
 
         for (String message : messages) {
             messageListView.getItems().add(createMessageBubble(message, false));
