@@ -12,7 +12,7 @@
 	<feature name="Notifications"/>
 	<feature name="SMS"/>
 	<feature name="Bluetooth"/>
-	<feature name="Push"/>
+	<feature manual="selected" name="Push"/>
 	<feature automatic="selected" name="Type"/>
 	<feature automatic="selected" name="Client"/>
 	<feature automatic="selected" name="UI"/>

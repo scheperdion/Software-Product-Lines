@@ -29,13 +29,28 @@
             <version>17.0.8</version>
         </dependency>
         <!-- Example: Additional library (Gson) -->
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.11.0</version>
-        </dependency>
+  <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.11.0</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+    	<groupId>com.google.code.gson</groupId>
+    	<artifactId>gson-extras</artifactId>
+    	<version>2.8.5</version>
+    </dependency>
     </dependencies>
-
+  <repositories>
+    <repository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>gsonextras</id>
+      <name>CronApp GSON extra's</name>
+      <url>https://artifactory.cronapp.io/public-release</url>
+    </repository>
+  </repositories>
     <build>
 		<sourceDirectory>src</sourceDirectory>
         <plugins>
