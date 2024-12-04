@@ -1,5 +1,4 @@
-import crypto.Authentication;
-import crypto.Encryption;
+import crypto.MessageProcessors;
 import messages.Message;
 import network.ChatSocket;
 
@@ -16,11 +15,10 @@ public class Server implements Runnable {
     boolean running;
     List<ChatSocket> sockets = new ArrayList<>();
     ArrayBlockingQueue<Message> messages = new ArrayBlockingQueue<>(50);
-    Logging _logger;
-    final Encryption encryption = new Encryption();
-    
+    final MessageProcessors messageProcessors = MessageProcessors.getInstance();
+
     public Server(int port) {
-        _logger = new Logging("Server"+port);
+        System.out.println("Server"+port);
         this.port = port;
     }
     public void listen() {
@@ -34,7 +32,7 @@ public class Server implements Runnable {
                 sockets.add(chatSkt);
             }
         } catch (IOException e) {
-            _logger.logSevere("Exception occurred: " + e.getMessage());
+            System.out.println("Exception occurred: " + e.getMessage());
         }
     }
 
@@ -42,19 +40,16 @@ public class Server implements Runnable {
     public void run() {
         while(running) {
             try {
-                Message m = encryption.decrypt(messages.take());
-                if(!m.getSocket().isAuthenticated() && Authentication.checkAuthenticationToken(m.getString())) {
-                    m.getSocket().authenticate();
-                }
-                _logger.logInfo("Distribute message: " + m.getString());
+                Message m = messages.take();
+                m.setString(messageProcessors.processMessageOnServer(m.getString()));
                 for(ChatSocket skt : this.sockets) {
-                    if(skt.isConnected() && skt.isAuthenticated()) {
+                    if(skt.isConnected()) {
                         skt.send(m);
                     }
                 }
             } catch (InterruptedException e) {
                 // TODO: log exception and graceful exit?
-                _logger.logSevere("Exception occurred: " + e.getMessage());
+                System.out.println("Exception occurred: " + e.getMessage());
                 throw new RuntimeException(e);
             }
 
