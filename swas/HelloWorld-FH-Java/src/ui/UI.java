@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 import java.util.Scanner; 
 
-import Base.Alert; 
+import event.*; 
 
 public  class  UI  extends Application {
 	
@@ -26,7 +26,7 @@ public  class  UI  extends Application {
     public void start(Stage stage) {
         messageListView = new ListView<HBox>();
 
-        String[] messages = { "Thunderstorm!", "UVdfsigbsifdb!" };
+        String[] messages = { "Thunderstorm!", "UV!" };
 
         for (String message : messages) {
             messageListView.getItems().add(createMessageBubble(message, false));
@@ -43,21 +43,21 @@ public  class  UI  extends Application {
         stage.setScene(scene);
         stage.show();
 
-        startConsoleInputThread();
+//        startConsoleInputThread();
     }
 
 	
 
-    private HBox createMessageBubble(String message, boolean isSent) {
+    public HBox createMessageBubble(String message, boolean right) {
         Text messageText = new Text(message);
         messageText.setWrappingWidth(300);
 
         HBox messageBox = new HBox();
-        messageBox.setAlignment(isSent ? Pos.BOTTOM_RIGHT : Pos.BOTTOM_LEFT);
+        messageBox.setAlignment(right ? Pos.BOTTOM_RIGHT : Pos.BOTTOM_LEFT);
         messageBox.setSpacing(10);
 
         TextFlow textFlow = new TextFlow(messageText);
-        textFlow.setStyle("-fx-background-color: " + (isSent ? "lightblue" : "lightgray") + "; "
+        textFlow.setStyle("-fx-background-color: " + (right ? "lightblue" : "lightgray") + "; "
                 + "-fx-background-radius: 15; "
                 + "-fx-padding: 10;");
 
@@ -68,11 +68,11 @@ public  class  UI  extends Application {
 	
 
 
-    public void alertToUI(final Alert alert, final boolean isSent) {
+    public void eventToUI(final AbstractEvent event, final boolean right) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                messageListView.getItems().add(createMessageBubble(alert.toString(), isSent));
+                messageListView.getItems().add(createMessageBubble(event.toString(), right));
             }
         });
     }
@@ -88,7 +88,7 @@ public  class  UI  extends Application {
                     System.out.print("Enter message: ");
                     String input = scanner.nextLine();
                     
-                    alertToUI(new Alert(), false);
+                    alertToUI(new NoEvent("noEvent"), false);
                 }
             }
         });
@@ -99,7 +99,7 @@ public  class  UI  extends Application {
 
 	
 
-    public static void main(String[] args) {
+    public static void go(String[] args) {
         launch(args);
     }
 

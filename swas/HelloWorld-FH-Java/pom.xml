@@ -71,7 +71,7 @@
 		    <artifactId>exec-maven-plugin</artifactId>
 		    <version>3.0.0</version>
 		    <configuration>
-		        <mainClass>ui.UI</mainClass>
+		        <mainClass>Main</mainClass>
 		        <arguments>
 		            <argument>--add-modules</argument>
 		            <argument>javafx.controls,javafx.graphics</argument>

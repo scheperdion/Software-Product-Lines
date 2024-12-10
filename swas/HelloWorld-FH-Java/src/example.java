@@ -25,11 +25,18 @@
  * 
  * @author Thomas Thuem
  */
-public  class  example {
+public   class  example {
 	
 
-	protected void print() {
+	 private void  print__wrappee__Base  () {
 		System.out.print("Base");
+	}
+
+	
+	
+	protected void print() {
+		print__wrappee__Base();
+		System.out.print(" world");
 	}
 
 	

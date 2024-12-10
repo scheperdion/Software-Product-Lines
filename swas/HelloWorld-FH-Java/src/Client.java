@@ -1,37 +1,50 @@
-import java.net.ServerSocket;
-import java.util.concurrent.BlockingQueue;
+import java.net.ServerSocket; 
+import java.util.concurrent.BlockingQueue; 
 
-import com.google.gson.Gson;
+import com.google.gson.Gson; 
 
-import java.util.concurrent.ArrayBlockingQueue;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List; 
-import java.io.*;
+import java.util.concurrent.ArrayBlockingQueue; 
+import java.net.Socket; 
+import java.util.ArrayList; 
+import java.util.List;  
+import java.io.*; 
 
 
-import ui.UI;
-import event.*;
+import ui.UI; 
+import event.*; 
 
-public class Client implements Runnable{
+public  class  Client  implements Runnable {
+	
 	
 	private BlockingQueue<AbstractEvent> data;
+
+	
 	private ArrayList<IClientCallback> callbacks;
+
+	
 	private EventDeserializer eventDeserializer;
+
+	
 	
 	public Client() {
 		this.data = new ArrayBlockingQueue<AbstractEvent>(10);
 		this.callbacks = new ArrayList<IClientCallback>();
 		this.eventDeserializer = new EventDeserializer();
 	}
+
+	
 	
 	public void addCallback(IClientCallback callback) {
 		this.callbacks.add(callback);
 	}
+
+	
 	
 	public AbstractEvent getEvent() {
 		return new AbstractEvent() { }; // this.data.poll(); 
 	}
+
+	
 	
 	@Override
 	public void run() {
@@ -57,6 +70,8 @@ public class Client implements Runnable{
 			// it was impossible to add the event to the queue, this means that something is wrong because items dont get 'used'
 		}
 	}
+
+	
 	
 	public void printData() {
 		while(true) {
@@ -70,6 +85,8 @@ public class Client implements Runnable{
 			}
 		}
 	}
+
+	
 	
 	public void updateUI(UI ui) {
 		System.out.println("some message");
@@ -85,14 +102,6 @@ public class Client implements Runnable{
 			}
 		}
 	}
-	
-//	public static void main(String[] args) throws Exception{
-//		System.out.println("Running Client");
-//		Client c = new Client();
-//		Thread t = new Thread(c);
-//		UI ui = new UI(args);
-//		t.start();
-//		c.updateUI();
-//		t.join();
-//	}
+
+
 }
