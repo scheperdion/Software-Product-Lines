@@ -9,7 +9,7 @@
 	<feature name="Tsunami"/>
 	<feature name="Thunderstorm"/>
 	<feature name="Hurricane"/>
-	<feature name="Notifications"/>
+	<feature automatic="selected" name="Notifications"/>
 	<feature name="SMS"/>
 	<feature name="Bluetooth"/>
 	<feature manual="selected" name="Push"/>

@@ -1,3 +1,5 @@
+package client;
+
 import java.net.ServerSocket; 
 import java.util.concurrent.BlockingQueue; 
 
@@ -6,16 +8,16 @@ import com.google.gson.Gson;
 import java.util.concurrent.ArrayBlockingQueue; 
 import java.net.Socket; 
 import java.util.ArrayList; 
-import java.util.List;  
+import java.util.List; 
 import java.io.*; 
-
 
 import ui.UI; 
 import event.*; 
+import Base.IClientCallback;
 
 public  class  Client  implements Runnable {
 	
-	
+
 	private BlockingQueue<AbstractEvent> data;
 
 	
@@ -25,7 +27,7 @@ public  class  Client  implements Runnable {
 	private EventDeserializer eventDeserializer;
 
 	
-	
+
 	public Client() {
 		this.data = new ArrayBlockingQueue<AbstractEvent>(10);
 		this.callbacks = new ArrayList<IClientCallback>();
@@ -33,71 +35,82 @@ public  class  Client  implements Runnable {
 	}
 
 	
-	
+
 	public void addCallback(IClientCallback callback) {
 		this.callbacks.add(callback);
 	}
 
 	
-	
+
 	public AbstractEvent getEvent() {
-		return new AbstractEvent() { }; // this.data.poll(); 
+		return new NoEvent("") {
+		}; // this.data.poll();
 	}
 
 	
+
+	public void receiveEvent(IClientCallback c) {
+//		event = c.receivedEvent(new NoEvent("") {});
+//		ui.eventToUI(new NoEvent("test"), false);
+	}
+
 	
+
 	@Override
 	public void run() {
 		try {
 			Socket socket = new Socket("localhost", 6665);
-	        //BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
-	        //String message = userInput.readLine();
-			//PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
-	        BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			// BufferedReader userInput = new BufferedReader(new
+			// InputStreamReader(System.in));
+			// String message = userInput.readLine();
+			// PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
+			BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			Gson gson = this.eventDeserializer.getGSON();
-	        while(true) {
-	            String serverResponse = input.readLine();
-	            this.data.add(gson.fromJson(serverResponse, AbstractEvent.class));	
-	            for(IClientCallback c : this.callbacks ) {
-	            	c.receivedEvent(new AbstractEvent() {});
-	            }
-	        }
-	        
-		} catch(IOException e) {
+			while (true) {
+				String serverResponse = input.readLine();
+				this.data.add(gson.fromJson(serverResponse, AbstractEvent.class));
+				for (IClientCallback c : this.callbacks) {
+					receiveEvent(c);
+				}
+			}
+
+		} catch (IOException e) {
 			e.printStackTrace();
-		} catch(IllegalStateException e) {
+		} catch (IllegalStateException e) {
 			e.printStackTrace();
-			// it was impossible to add the event to the queue, this means that something is wrong because items dont get 'used'
+			// it was impossible to add the event to the queue, this means that something is
+			// wrong because items dont get 'used'
 		}
 	}
 
 	
-	
+
 	public void printData() {
-		while(true) {
+		while (true) {
 			try {
-			    Thread.sleep(5000);
+				Thread.sleep(5000);
 			} catch (InterruptedException e) {
-			  Thread.currentThread().interrupt();
+				Thread.currentThread().interrupt();
 			}
-			for(AbstractEvent s : this.data) {
+			for (AbstractEvent s : this.data) {
 				System.out.println(s);
 			}
 		}
 	}
 
 	
-	
+
 	public void updateUI(UI ui) {
 		System.out.println("some message");
-		while(true) {
+		while (true) {
 			try {
-			    Thread.sleep(5000);
+				Thread.sleep(5000);
 			} catch (InterruptedException e) {
-			  Thread.currentThread().interrupt();
+				Thread.currentThread().interrupt();
 			}
-			for(AbstractEvent s : this.data) {
+			for (AbstractEvent s : this.data) {
 				System.out.println(s);
+				ui.eventToUI(new NoEvent("test"), false);
 //				ui.createMessageBubble(s.type,false);
 			}
 		}

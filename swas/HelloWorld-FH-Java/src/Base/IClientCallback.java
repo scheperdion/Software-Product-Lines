@@ -1,3 +1,5 @@
+package Base; 
+
 import event.AbstractEvent; 
 
 public  interface  IClientCallback {

@@ -13,12 +13,16 @@ import javafx.stage.Stage;
 
 import java.util.Scanner; 
 
+import client.*; 
 import event.*; 
 
 public  class  UI  extends Application {
 	
 
     private ListView<HBox> messageListView;
+
+	
+    private Client client;
 
 	
 
@@ -43,7 +47,19 @@ public  class  UI  extends Application {
         stage.setScene(scene);
         stage.show();
 
+        UI ui = this;
+		Thread t = new Thread(client);
+		t.start();
+        
 //        startConsoleInputThread();
+        Thread clientThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                client.updateUI(ui);
+//                ui.startConsoleInputThread();
+            }
+        });
+        clientThread.start();
     }
 
 	
@@ -88,7 +104,7 @@ public  class  UI  extends Application {
                     System.out.print("Enter message: ");
                     String input = scanner.nextLine();
                     
-                    alertToUI(new NoEvent("noEvent"), false);
+                    eventToUI(new NoEvent("noEvent"), false);
                 }
             }
         });
@@ -100,7 +116,13 @@ public  class  UI  extends Application {
 	
 
     public static void go(String[] args) {
-        launch(args);
+    	launch(args);
+    }
+
+	
+    
+    public UI() {
+    	this.client = new Client();
     }
 
 
