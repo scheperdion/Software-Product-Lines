@@ -6,6 +6,6 @@ package event;
 public class EventDeserializer {
 
 	public EventDeserializer() {
-		this.runtimeTypeAdapterFactory.registerSubtype(TsunamiEvent.class, "tsunami");
+		this.runtimeTypeAdapterFactory.registerSubtype(EarthquakeEvent.class, "earthquake");
 	}
 }

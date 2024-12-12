@@ -11,4 +11,8 @@ public class NoEvent extends AbstractEvent {
 	public String toString() {
 		return this.type + " " + this.somefield;
 	}
+	
+	public EventLocation getLocation() {
+		return null;
+	}
 }

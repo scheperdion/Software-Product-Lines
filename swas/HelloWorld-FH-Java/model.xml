@@ -25,9 +25,9 @@
 			</and>
 			<and abstract="true" name="Events">
 				<graphics key="collapsed" value="false"/>
-				<feature name="Tsunami"/>
+				<feature name="Flooding"/>
 				<feature name="Thunderstorm"/>
-				<feature name="Hurricane"/>
+				<feature name="Earthquake"/>
 			</and>
 			<and name="Notifications">
 				<feature name="SMS"/>
