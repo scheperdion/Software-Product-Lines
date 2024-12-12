@@ -1,5 +1,5 @@
 import ui.UI; 
-import client.*; 
+//import client.*;
 
 public  class  Main {
 	

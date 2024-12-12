@@ -84,6 +84,7 @@ public   class   Client   implements Runnable {
 			while (true) {
 				String serverResponse = input.readLine();
 				this.data.add(gson.fromJson(serverResponse, AbstractEvent.class));
+				System.out.println("test: " + serverResponse);
 				for (IClientCallback c : this.callbacks) {
 					receiveEvent(c);
 				}
@@ -128,10 +129,11 @@ public   class   Client   implements Runnable {
 				Thread.currentThread().interrupt();
 			}
 			for (AbstractEvent s : this.data) {
-				System.out.println(s);
-				ui.eventToUI(new NoEvent("test"), false);
+//				System.out.println(s);
+				ui.eventToUI(s, false);
 //				ui.createMessageBubble(s.type,false);
 			}
+			this.data.clear();
 		}
 	}
 

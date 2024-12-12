@@ -33,9 +33,16 @@ public   class  example {
 	}
 
 	
+
+	 private void  print__wrappee__Thunderstorm  () {
+		print__wrappee__Base();
+		System.out.print(" Thunderstorm");
+	}
+
+	
 	
 	protected void print() {
-		print__wrappee__Base();
+		print__wrappee__Thunderstorm();
 		System.out.print(" world");
 	}
 

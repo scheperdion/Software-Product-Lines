@@ -5,10 +5,10 @@
 	<feature automatic="selected" name="Location"/>
 	<feature name="UK"/>
 	<feature manual="selected" name="NL"/>
-	<feature name="Events"/>
-	<feature name="Tsunami"/>
-	<feature name="Thunderstorm"/>
-	<feature name="Hurricane"/>
+	<feature automatic="selected" name="Events"/>
+	<feature manual="selected" name="Tsunami"/>
+	<feature manual="selected" name="Thunderstorm"/>
+	<feature manual="selected" name="Hurricane"/>
 	<feature automatic="selected" name="Notifications"/>
 	<feature name="SMS"/>
 	<feature name="Bluetooth"/>
@@ -16,8 +16,8 @@
 	<feature automatic="selected" name="Type"/>
 	<feature automatic="selected" name="Client"/>
 	<feature automatic="selected" name="UI"/>
-	<feature manual="selected" name="Alert_UI"/>
-	<feature automatic="unselected" name="Extended_UI"/>
+	<feature automatic="unselected" name="Alert_UI"/>
+	<feature manual="selected" name="Extended_UI"/>
 	<feature name="Language"/>
 	<feature name="English"/>
 	<feature name="Dutch"/>
