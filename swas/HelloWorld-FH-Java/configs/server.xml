@@ -5,11 +5,11 @@
 	<feature name="Location"/>
 	<feature name="UK"/>
 	<feature name="NL"/>
-	<feature name="Events"/>
-	<feature name="Tsunami"/>
-	<feature name="Thunderstorm"/>
-	<feature name="Hurricane"/>
-	<feature manual="selected" name="Notifications"/>
+	<feature automatic="selected" name="Events"/>
+	<feature manual="selected" name="Tsunami"/>
+	<feature manual="selected" name="Thunderstorm"/>
+	<feature manual="selected" name="Hurricane"/>
+	<feature automatic="selected" manual="selected" name="Notifications"/>
 	<feature name="SMS"/>
 	<feature name="Bluetooth"/>
 	<feature name="Push"/>
