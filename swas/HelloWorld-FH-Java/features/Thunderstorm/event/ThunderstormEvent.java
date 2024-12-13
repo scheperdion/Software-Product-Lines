@@ -20,4 +20,8 @@ public class ThunderstormEvent extends AbstractEvent {
 	public String toString() {
 		return "Thunderstorm ALERT" + " " + this.severity;
 	}
+	
+	public EventLocation[] getArea() {
+		return null;
+	}
 }

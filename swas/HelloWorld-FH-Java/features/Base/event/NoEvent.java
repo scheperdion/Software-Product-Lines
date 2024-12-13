@@ -12,7 +12,7 @@ public class NoEvent extends AbstractEvent {
 		return this.type + " " + this.somefield;
 	}
 	
-	public EventLocation getLocation() {
+	public EventLocation[] getArea() {
 		return null;
 	}
 }

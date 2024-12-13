@@ -6,9 +6,9 @@ public class EarthquakeEvent extends AbstractEvent {
 	private String severity;
 	private String country;
 	private String[] provinces;
-	private EventLocation location;
+	private EventLocation[] location;
 
-	public EarthquakeEvent(String severity, String country, String[] provinces, EventLocation location) {
+	public EarthquakeEvent(String severity, String country, String[] provinces, EventLocation[] location) {
 		this.type = "earthquake";
 
 		this.severity = severity;
@@ -18,10 +18,10 @@ public class EarthquakeEvent extends AbstractEvent {
 	}
 
 	public String toString() {
-		return "Earthquake ALERT" + " " + this.severity + " severity at " + location.latitude + "lat and " + location.longitude + "long";
+		return "Earthquake ALERT" + " " + this.severity + " severity at " + location[0].latitude + "lat and " + location[0].longitude + "long";
 	}
 	
-	public EventLocation getLocation() {
+	public EventLocation[] getArea() {
 		return this.location;
 	}
 }

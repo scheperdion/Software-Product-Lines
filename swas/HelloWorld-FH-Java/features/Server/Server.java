@@ -43,7 +43,11 @@ public class Server implements Runnable {
 	            for(Socket skt : this.sockets) {
 	            	try {
 		            	PrintWriter output = new PrintWriter(skt.getOutputStream(), true);
-		            	output.println(gson.toJson(new NoEvent("this is some text")));	
+		            	
+		            	EventLocation location = new EventLocation(52.371807d, 4.896029d, 20d);
+		            	
+		            	EarthquakeEvent event = new EarthquakeEvent("high", "netherlands", new String[]{"Noord_Holland", "Utrecht"}, new EventLocation[]{location});
+		            	output.println(gson.toJson(event));
 	            	} catch(IOException e) {
 	            		
 	            	}
