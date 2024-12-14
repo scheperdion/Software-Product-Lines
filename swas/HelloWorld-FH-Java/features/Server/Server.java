@@ -21,6 +21,7 @@ import event.EventDeserializer;
 
 public class Server implements Runnable {
 	private List<Socket> sockets;
+	private final String messagesfilename = "./server_messages.json";
 	
 	public Server() {
 		this.sockets = new ArrayList<Socket>();
@@ -43,58 +44,36 @@ public class Server implements Runnable {
 	}
 	
 	public void startDataMock() {
-		EventDeserializer ed = new EventDeserializer();
-		Gson gson = ed.getGSON();
-		watchFile();
+		while(true) {
+			try {
+				watchFile();
+			} catch(IOException e) { 
+				
+			}
+	
+		}
 	}
 	
-	public void watchFile() {
-		try {
-			Path path = Paths.get("./server_messages.json");
-			System.out.println(path.toAbsolutePath().normalize());
-	        WatchService watchService = FileSystems.getDefault().newWatchService();
-
-	        path.getParent().register(watchService, StandardWatchEventKinds.ENTRY_MODIFY);
-	        
-	        while (true) {
-	            WatchKey key = watchService.take();
-	            for (WatchEvent<?> event : key.pollEvents()) {
-	            	Path changedPath = (Path) event.context();
-	                if (changedPath.equals(path.getFileName())) {
-	                	System.out.println("File updated!");
-	    	            for(Socket skt : this.sockets) {
-	    	            	try {
-	    		            	PrintWriter output = new PrintWriter(skt.getOutputStream(), true);
-	    		            	String filePath = "./server_messages.json";
-	    		            	BufferedReader br = new BufferedReader(new FileReader(filePath));
-	    		            	try {
-	    		                    String line;
-	    		                    while ((line = br.readLine()) != null) {
-	    	    		            	output.println(line);
-	    		                    }
-	    		                } catch (IOException e) {
-	    		                    System.err.println("An error occurred while reading the file: " + e.getMessage());
-	    		                }
-	    	            	} catch(IOException e) {
-	    	            		e.printStackTrace();
-	    	            	}
-	    	            }
-	                }
-	            }
-
-	            // Reset the key to continue monitoring
-	            boolean valid = key.reset();
-	            if (!valid) {
-	                System.out.println("Watch service is no longer valid. Exiting...");
-	                break;
-	            }
-	        }
-		} catch(IOException e) {
-			e.printStackTrace();
-		} catch(InterruptedException e) {
-			e.printStackTrace();
+	public void watchFile() throws IOException {
+		MessagesWatcher messagesWatcher = new MessagesWatcher(this.messagesfilename);
+		MessagesReader mr = new MessagesReader();
+		//MessagesReader reader = new MessagesReader();
+		if(!messagesWatcher.waitOnFileChange()) {
+			// TODO: something went wrong, we have to fix it...
+		} else {
+			System.out.println("Messages updated!");
+			List<String> messages = MessagesReader.getFileContents(messagesfilename);
+            for(Socket skt : this.sockets) {
+            	try {
+	            	PrintWriter output = new PrintWriter(skt.getOutputStream(), true);
+	            	for(String message : messages) {
+	            		output.println(message);
+	            	}
+            	} catch(IOException e) {
+            		e.printStackTrace();
+            	}
+            }
 		}
-		
 	}
 	
 	public static void main(String[] args) throws Exception{
