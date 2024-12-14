@@ -5,11 +5,11 @@
 	<feature name="Location"/>
 	<feature name="UK"/>
 	<feature name="NL"/>
-	<feature automatic="selected" name="Events"/>
+	<feature name="Events"/>
 	<feature name="Flooding"/>
-	<feature manual="selected" name="Thunderstorm"/>
-	<feature manual="selected" name="Earthquake"/>
-	<feature automatic="selected" manual="selected" name="Notifications"/>
+	<feature name="Thunderstorm"/>
+	<feature name="Earthquake"/>
+	<feature manual="selected" name="Notifications"/>
 	<feature name="SMS"/>
 	<feature name="Bluetooth"/>
 	<feature name="Push"/>
@@ -18,6 +18,7 @@
 	<feature automatic="unselected" name="UI"/>
 	<feature automatic="unselected" name="Alert_UI"/>
 	<feature automatic="unselected" name="Extended_UI"/>
+	<feature name="Dark_theme"/>
 	<feature automatic="unselected" name="Language"/>
 	<feature automatic="unselected" name="English"/>
 	<feature automatic="unselected" name="Dutch"/>

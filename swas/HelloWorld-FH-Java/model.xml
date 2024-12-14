@@ -38,7 +38,9 @@
 				<and name="Client">
 					<alt abstract="true" name="UI">
 						<feature name="Alert_UI"/>
-						<feature name="Extended_UI"/>
+						<and name="Extended_UI">
+							<feature name="Dark_theme"/>
+						</and>
 					</alt>
 					<and abstract="true" name="Language">
 						<feature name="English"/>

@@ -22,6 +22,7 @@ public class UI extends Application {
 
     private ListView<HBox> messageListView;
     private Client client;
+    private WebView map;
 
     public WebView createMap() {
         WebView webView = new WebView();
@@ -35,12 +36,36 @@ public class UI extends Application {
         return webView;
     }
     
+    private VBox addUIElements(VBox root) {
+    	this.map = createMap();
+    	root.getChildren().addAll(map);
+    	return root;
+    }
+    
+//	Button callFunctionButton = new Button("Add Custom Pin");
+//	callFunctionButton.setOnAction(new EventHandler<javafx.event.ActionEvent>() {
+//	    @Override
+//	    public void handle(javafx.event.ActionEvent event) {
+//	        // Example data
+//
+//	        double lat = 52.371807d; // Latitude
+//	        double lng = 4.896029d; // Longitude
+//	        String message = "\"Hello from San Francisco!\"";
+//
+//	        // Call the JavaScript function 'addCustomPin'
+//	        String cmd = "addCustomPin("+Double.toString(lat)+","+Double.toString(lng) +","+message+")";
+//	        System.out.println(cmd);
+//	        map.getEngine().executeScript(
+//	            cmd
+//	        );
+//	    }
+//	});
+    
     @Override
     public void start(Stage stage) {
-    	WebView map = this.createMap();
-
         VBox root = new VBox(10);
-        root.getChildren().addAll(map);
+        addUIElements(root);
+//        root.getChildren().addAll(map, callFunctionButton, darkModeButton);
         root.setPadding(new Insets(10));
 
         Scene scene = new Scene(root, 400, 500);
@@ -52,7 +77,7 @@ public class UI extends Application {
         Thread clientThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                client.updateUI(ui);
+//                client.updateUI(ui);
             }
         });
         clientThread.start();
@@ -80,6 +105,5 @@ public class UI extends Application {
     }
 
     public UI() {
-        this.client = new Client();
     }
 }

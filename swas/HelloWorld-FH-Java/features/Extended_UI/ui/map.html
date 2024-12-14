@@ -19,16 +19,29 @@
 <body>
     <div id="map"></div>
     <script>
-        var map = L.map('map').setView([51.505, -0.09], 13); // Default location: London
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19
-        }).addTo(map);
-        
-        // Add click event to add markers
-        map.on('click', function(e) {
-            var marker = L.marker(e.latlng).addTo(map);
-            alert("Location selected: " + e.latlng.lat + ", " + e.latlng.lng);
+        var map = L.map('map').setView([51.505, -0.09], 13);
+
+        // Define tile layers
+        var lightMode = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: 'Map data &copy; OpenStreetMap contributors'
         });
+
+        var darkMode = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            maxZoom: 19,
+            attribution: 'Map data &copy; OpenStreetMap contributors, Tiles by CartoDB'
+        });
+
+        // Add default (light) layer
+        lightMode.addTo(map);
+
+        // Function to toggle between light and dark mode
+        var currentLayer = lightMode;
+        function toggleDarkMode() {
+            map.removeLayer(currentLayer);
+            currentLayer = currentLayer === lightMode ? darkMode : lightMode;
+            currentLayer.addTo(map);
+        }
     </script>
 </body>
 </html>
