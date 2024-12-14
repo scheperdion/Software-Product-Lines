@@ -26,7 +26,7 @@
         var map = createMap()
 
         // Define tile layers
-        var lightMode = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        /*var lightMode = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: 'Map data &copy; OpenStreetMap contributors'
         });
@@ -34,7 +34,21 @@
         var darkMode = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
             maxZoom: 19,
             attribution: 'Map data &copy; OpenStreetMap contributors, Tiles by CartoDB'
-        });
+        });*/
+        
+		var lightMode = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		    maxZoom: 19,
+		    attribution: 'Map data &copy; OpenStreetMap contributors',
+		    language: 'nl' // This is to request Dutch language support for labels
+		});
+
+		var darkMode = L.tileLayer('https://{s}.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+		    maxZoom: 16,
+		    attribution: 'Tiles &copy; Esri, Map data &copy; OpenStreetMap contributors',
+		    subdomains: ['server', 'services']
+		});
+
+
 
         // Add default (light) layer
         lightMode.addTo(map);

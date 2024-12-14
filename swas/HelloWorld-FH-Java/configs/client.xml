@@ -3,8 +3,8 @@
 	<feature automatic="selected" name="SWAS"/>
 	<feature automatic="selected" manual="selected" name="Base"/>
 	<feature automatic="selected" name="Location"/>
-	<feature manual="selected" name="UK"/>
-	<feature automatic="unselected" name="NL"/>
+	<feature automatic="unselected" name="UK"/>
+	<feature manual="selected" name="NL"/>
 	<feature automatic="selected" name="Events"/>
 	<feature name="Flooding"/>
 	<feature manual="selected" name="Thunderstorm"/>

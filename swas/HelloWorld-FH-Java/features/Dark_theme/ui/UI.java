@@ -14,7 +14,7 @@ public class UI extends Application {
         darkModeButton.setOnAction(new EventHandler<javafx.event.ActionEvent>() {
     	    @Override
     	    public void handle(javafx.event.ActionEvent event) {
-    	    	map.getEngine().executeScript("setView(1,1,1)");
+    	    	map.getEngine().executeScript("toggleDarkMode()");
     	    }
     	});
         root.getChildren().addAll(darkModeButton);

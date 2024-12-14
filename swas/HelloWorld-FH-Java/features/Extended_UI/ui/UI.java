@@ -31,6 +31,28 @@ public class UI extends Application implements IClientCallback {
 		instance = this;
 	}
 	
+	private void setupMapView(final WebView webView) {
+	    webView.getEngine().getLoadWorker().stateProperty().addListener(
+	        new javafx.beans.value.ChangeListener<javafx.concurrent.Worker.State>() {
+	            @Override
+	            public void changed(javafx.beans.value.ObservableValue<? extends javafx.concurrent.Worker.State> observable, 
+	                                javafx.concurrent.Worker.State oldValue, 
+	                                javafx.concurrent.Worker.State newValue) {
+	                if (newValue == javafx.concurrent.Worker.State.SUCCEEDED) {
+	                    // Execute JavaScript once the map is fully loaded
+	                    Platform.runLater(new Runnable() {
+	                        @Override
+	                        public void run() {
+	                        	String cmd = String.format("setView(%s)", Location.getString());
+	                            webView.getEngine().executeScript(cmd);
+	                        }
+	                    });
+	                }
+	            }
+	        }
+	    );
+	}
+	
     public WebView createMap() {
         WebView webView = new WebView();
         File htmlFile = new File("features/Extended_UI/ui/map.html");
@@ -40,6 +62,7 @@ public class UI extends Application implements IClientCallback {
             System.out.println("Map file not found: " + htmlFile.getAbsolutePath());
         }
         webView.setPrefSize(400, 400);
+        setupMapView(webView);
         return webView;
     }
     
@@ -49,31 +72,16 @@ public class UI extends Application implements IClientCallback {
     	return root;
     }
     
-    private void positionMap() {
-    }
-    
     @Override
     public void start(Stage stage) {
         VBox root = new VBox(10);
         addUIElements(root);
-//        root.getChildren().addAll(map, callFunctionButton, darkModeButton);
         root.setPadding(new Insets(10));
 
         Scene scene = new Scene(root, 400, 500);
         stage.setTitle("Swas - Severe Weather Alert System");
         stage.setScene(scene);
         stage.show();
-        	
-        positionMap();
-    }
-
-    public void eventToUI(final AbstractEvent event, final boolean right) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-//                TODO
-            }
-        });
     }
     
 	@Override
