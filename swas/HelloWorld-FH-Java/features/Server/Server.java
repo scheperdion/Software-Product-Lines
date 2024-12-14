@@ -1,13 +1,22 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardWatchEventKinds;
+import java.nio.file.WatchEvent;
+import java.nio.file.WatchKey;
+import java.nio.file.WatchService;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
-import event.*;
 
-import java.io.*;
+import event.EventDeserializer; 
 
 
 public class Server implements Runnable {
@@ -36,30 +45,56 @@ public class Server implements Runnable {
 	public void startDataMock() {
 		EventDeserializer ed = new EventDeserializer();
 		Gson gson = ed.getGSON();
-		while(true) {
-			// send data / events to clients at random intervals
-			try {
-			    Thread.sleep(5000);
-	            for(Socket skt : this.sockets) {
-	            	try {
-		            	PrintWriter output = new PrintWriter(skt.getOutputStream(), true);
-		            	
-		            	EventLocation location = new EventLocation(52.371807d, 4.896029d, 20d);
-		            	
-		            	EarthquakeEvent event = new EarthquakeEvent("high", "netherlands", new String[]{"Noord_Holland", "Utrecht"}, new EventLocation[]{location});
-		            	output.println(gson.toJson(event));
-		            	System.out.println(gson.toJson(event));
-	            	} catch(IOException e) {
-	            		e.printStackTrace();
-	            	}
-	            }
-			} catch (InterruptedException e) {
-				
-			  Thread.currentThread().interrupt();
-			}
+		watchFile();
+	}
+	
+	public void watchFile() {
+		try {
+			Path path = Paths.get("./server_messages.json");
+			System.out.println(path.toAbsolutePath().normalize());
+	        WatchService watchService = FileSystems.getDefault().newWatchService();
 
-                
+	        path.getParent().register(watchService, StandardWatchEventKinds.ENTRY_MODIFY);
+	        
+	        while (true) {
+	            WatchKey key = watchService.take();
+	            for (WatchEvent<?> event : key.pollEvents()) {
+	            	Path changedPath = (Path) event.context();
+	                if (changedPath.equals(path.getFileName())) {
+	                	System.out.println("File updated!");
+	    	            for(Socket skt : this.sockets) {
+	    	            	try {
+	    		            	PrintWriter output = new PrintWriter(skt.getOutputStream(), true);
+	    		            	String filePath = "./server_messages.json";
+	    		            	BufferedReader br = new BufferedReader(new FileReader(filePath));
+	    		            	try {
+	    		                    String line;
+	    		                    while ((line = br.readLine()) != null) {
+	    	    		            	output.println(line);
+	    		                    }
+	    		                } catch (IOException e) {
+	    		                    System.err.println("An error occurred while reading the file: " + e.getMessage());
+	    		                }
+	    	            	} catch(IOException e) {
+	    	            		e.printStackTrace();
+	    	            	}
+	    	            }
+	                }
+	            }
+
+	            // Reset the key to continue monitoring
+	            boolean valid = key.reset();
+	            if (!valid) {
+	                System.out.println("Watch service is no longer valid. Exiting...");
+	                break;
+	            }
+	        }
+		} catch(IOException e) {
+			e.printStackTrace();
+		} catch(InterruptedException e) {
+			e.printStackTrace();
 		}
+		
 	}
 	
 	public static void main(String[] args) throws Exception{
