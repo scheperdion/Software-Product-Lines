@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory; 
 
+import java.time.LocalDateTime;
+
 public   class   EventDeserializer {
 	private RuntimeTypeAdapterFactory<AbstractEvent> runtimeTypeAdapterFactory;
 
@@ -14,6 +16,7 @@ public   class   EventDeserializer {
 
 	public Gson getGSON() {
 		return new GsonBuilder()
+				.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
 		        .registerTypeAdapterFactory(this.runtimeTypeAdapterFactory).create();
 	}
 }

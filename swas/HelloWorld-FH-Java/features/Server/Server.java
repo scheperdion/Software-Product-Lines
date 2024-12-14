@@ -48,11 +48,13 @@ public class Server implements Runnable {
 		            	
 		            	EarthquakeEvent event = new EarthquakeEvent("high", "netherlands", new String[]{"Noord_Holland", "Utrecht"}, new EventLocation[]{location});
 		            	output.println(gson.toJson(event));
+		            	System.out.println(gson.toJson(event));
 	            	} catch(IOException e) {
-	            		
+	            		e.printStackTrace();
 	            	}
 	            }
 			} catch (InterruptedException e) {
+				
 			  Thread.currentThread().interrupt();
 			}
 

@@ -19,7 +19,7 @@ public  class  NoEvent  extends AbstractEvent {
 
 	
 	
-	public EventLocation getLocation() {
+	public EventLocation[] getArea() {
 		return null;
 	}
 

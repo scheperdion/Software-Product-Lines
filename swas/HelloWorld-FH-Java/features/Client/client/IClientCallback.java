@@ -1,4 +1,4 @@
-package Base;
+package client;
 
 import event.AbstractEvent;
 

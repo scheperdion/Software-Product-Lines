@@ -6,18 +6,18 @@
 	<feature name="UK"/>
 	<feature manual="selected" name="NL"/>
 	<feature automatic="selected" name="Events"/>
-	<feature manual="selected" name="Tsunami"/>
+	<feature name="Flooding"/>
 	<feature manual="selected" name="Thunderstorm"/>
-	<feature manual="selected" name="Hurricane"/>
+	<feature manual="selected" name="Earthquake"/>
 	<feature automatic="selected" name="Notifications"/>
 	<feature name="SMS"/>
 	<feature name="Bluetooth"/>
 	<feature manual="selected" name="Push"/>
 	<feature automatic="selected" name="Type"/>
-	<feature automatic="selected" name="Client"/>
+	<feature automatic="selected" manual="selected" name="Client"/>
 	<feature automatic="selected" name="UI"/>
-	<feature automatic="unselected" name="Alert_UI"/>
-	<feature manual="selected" name="Extended_UI"/>
+	<feature manual="selected" name="Alert_UI"/>
+	<feature automatic="unselected" name="Extended_UI"/>
 	<feature name="Language"/>
 	<feature name="English"/>
 	<feature name="Dutch"/>

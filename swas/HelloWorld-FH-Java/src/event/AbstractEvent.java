@@ -6,5 +6,8 @@ public abstract  class  AbstractEvent {
 	
 	public abstract String toString();
 
+	
+	public abstract EventLocation[] getArea();
+
 
 }

@@ -6,9 +6,9 @@
 	<feature name="UK"/>
 	<feature name="NL"/>
 	<feature automatic="selected" name="Events"/>
-	<feature manual="selected" name="Tsunami"/>
+	<feature name="Flooding"/>
 	<feature manual="selected" name="Thunderstorm"/>
-	<feature manual="selected" name="Hurricane"/>
+	<feature manual="selected" name="Earthquake"/>
 	<feature automatic="selected" manual="selected" name="Notifications"/>
 	<feature name="SMS"/>
 	<feature name="Bluetooth"/>

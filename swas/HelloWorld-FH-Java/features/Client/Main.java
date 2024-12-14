@@ -1,22 +1,12 @@
 import ui.UI;
-//import client.*;
+import client.*;
 
 public class Main {
+	private static Client client;
     public static void main(String[] args) throws Exception {
         System.out.println("Running Client");
-        UI ui = new UI();
-
-		
-        Thread uiThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ui.go(args);
-            }
-        });
-        uiThread.setDaemon(true);
-        uiThread.start();
-        uiThread.join();
-        
-
+        client = new Client();
+		Thread clientThread = new Thread(client);
+		clientThread.start();
     }
 }

@@ -13,13 +13,9 @@ import java.io.*;
 
 import ui.UI; 
 import event.*; 
-import Base.IClientCallback;
+import client.IClientCallback;
 
 public  class  Client  implements Runnable {
-	
-
-	private BlockingQueue<AbstractEvent> data;
-
 	
 	private ArrayList<IClientCallback> callbacks;
 
@@ -29,7 +25,6 @@ public  class  Client  implements Runnable {
 	
 
 	public Client() {
-		this.data = new ArrayBlockingQueue<AbstractEvent>(10);
 		this.callbacks = new ArrayList<IClientCallback>();
 		this.eventDeserializer = new EventDeserializer();
 	}
@@ -39,22 +34,6 @@ public  class  Client  implements Runnable {
 	public void addCallback(IClientCallback callback) {
 		this.callbacks.add(callback);
 	}
-
-	
-
-	public AbstractEvent getEvent() {
-		return new NoEvent("") {
-		}; // this.data.poll();
-	}
-
-	
-
-	public void receiveEvent(IClientCallback c) {
-//		event = c.receivedEvent(new NoEvent("") {});
-//		ui.eventToUI(new NoEvent("test"), false);
-	}
-
-	
 
 	@Override
 	public void run() {
@@ -68,10 +47,10 @@ public  class  Client  implements Runnable {
 			Gson gson = this.eventDeserializer.getGSON();
 			while (true) {
 				String serverResponse = input.readLine();
-				this.data.add(gson.fromJson(serverResponse, AbstractEvent.class));
+				AbstractEvent e = gson.fromJson(serverResponse, AbstractEvent.class);
 				System.out.println("test: " + serverResponse);
 				for (IClientCallback c : this.callbacks) {
-					receiveEvent(c);
+					c.receivedEvent(e);
 				}
 			}
 
@@ -83,40 +62,4 @@ public  class  Client  implements Runnable {
 			// wrong because items dont get 'used'
 		}
 	}
-
-	
-
-	public void printData() {
-		while (true) {
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				Thread.currentThread().interrupt();
-			}
-			for (AbstractEvent s : this.data) {
-				System.out.println(s);
-			}
-		}
-	}
-
-	
-
-	public void updateUI(UI ui) {
-		System.out.println("some message");
-		while (true) {
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				Thread.currentThread().interrupt();
-			}
-			for (AbstractEvent s : this.data) {
-//				System.out.println(s);
-				ui.eventToUI(s, false);
-//				ui.createMessageBubble(s.type,false);
-			}
-			this.data.clear();
-		}
-	}
-
-
 }
