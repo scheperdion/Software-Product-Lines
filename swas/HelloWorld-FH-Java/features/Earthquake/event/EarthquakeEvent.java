@@ -24,4 +24,8 @@ public class EarthquakeEvent extends AbstractEvent {
 	public EventLocation[] getArea() {
 		return this.location;
 	}
+	
+	public String iconPath() {
+		return "../../Earthquake/Earthquake.png";
+	}
 }

@@ -12,18 +12,25 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.event.EventHandler;
 import javafx.scene.web.WebView;
+
+import java.util.Locale;
 import java.util.Scanner;
 import java.io.File;
 
 import client.*;
 import event.*;
 
-public class UI extends Application {
+import location.Location;
 
-    private ListView<HBox> messageListView;
-    private Client client;
-    private WebView map;
+public class UI extends Application implements IClientCallback {
+	private static UI instance;
+	private ListView<HBox> messageListView;
+	WebView map;
 
+	public UI() {
+		instance = this;
+	}
+	
     public WebView createMap() {
         WebView webView = new WebView();
         File htmlFile = new File("features/Extended_UI/ui/map.html");
@@ -37,29 +44,13 @@ public class UI extends Application {
     }
     
     private VBox addUIElements(VBox root) {
-    	this.map = createMap();
+    	this.instance.map = createMap();
     	root.getChildren().addAll(map);
     	return root;
     }
     
-//	Button callFunctionButton = new Button("Add Custom Pin");
-//	callFunctionButton.setOnAction(new EventHandler<javafx.event.ActionEvent>() {
-//	    @Override
-//	    public void handle(javafx.event.ActionEvent event) {
-//	        // Example data
-//
-//	        double lat = 52.371807d; // Latitude
-//	        double lng = 4.896029d; // Longitude
-//	        String message = "\"Hello from San Francisco!\"";
-//
-//	        // Call the JavaScript function 'addCustomPin'
-//	        String cmd = "addCustomPin("+Double.toString(lat)+","+Double.toString(lng) +","+message+")";
-//	        System.out.println(cmd);
-//	        map.getEngine().executeScript(
-//	            cmd
-//	        );
-//	    }
-//	});
+    private void positionMap() {
+    }
     
     @Override
     public void start(Stage stage) {
@@ -72,15 +63,8 @@ public class UI extends Application {
         stage.setTitle("Swas - Severe Weather Alert System");
         stage.setScene(scene);
         stage.show();
-
-        final UI ui = this;
-        Thread clientThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-//                client.updateUI(ui);
-            }
-        });
-        clientThread.start();
+        	
+        positionMap();
     }
 
     public void eventToUI(final AbstractEvent event, final boolean right) {
@@ -92,6 +76,22 @@ public class UI extends Application {
         });
     }
     
+	@Override
+	public void receivedEvent(AbstractEvent event) {
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				System.out.println("received event");
+				for(EventLocation location : event.getArea())
+				{
+					String cmd = String.format(Locale.US, "addCustomMarker(%f, %f, %f, \'%s\')", location.latitude, location.longitude, location.radius,event.iconPath());
+					System.out.println(cmd);
+					instance.map.getEngine().executeScript(cmd);
+				}
+			}
+		});
+	}
+	
     public static void go(String[] args) {
         launch(args);
     }
@@ -103,7 +103,24 @@ public class UI extends Application {
         alert.setContentText(content);
         alert.showAndWait();
     }
-
-    public UI() {
-    }
 }
+
+
+//Button callFunctionButton = new Button("Add Custom Pin");
+//callFunctionButton.setOnAction(new EventHandler<javafx.event.ActionEvent>() {
+//    @Override
+//    public void handle(javafx.event.ActionEvent event) {
+//        // Example data
+//
+//        double lat = 52.371807d; // Latitude
+//        double lng = 4.896029d; // Longitude
+//        String message = "\"Hello from San Francisco!\"";
+//
+//        // Call the JavaScript function 'addCustomPin'
+//        String cmd = "addCustomPin("+Double.toString(lat)+","+Double.toString(lng) +","+message+")";
+//        System.out.println(cmd);
+//        map.getEngine().executeScript(
+//            cmd
+//        );
+//    }
+//});

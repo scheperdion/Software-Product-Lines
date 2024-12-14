@@ -3,12 +3,12 @@
 	<feature automatic="selected" name="SWAS"/>
 	<feature automatic="selected" manual="selected" name="Base"/>
 	<feature automatic="selected" name="Location"/>
-	<feature name="UK"/>
-	<feature manual="selected" name="NL"/>
-	<feature name="Events"/>
+	<feature manual="selected" name="UK"/>
+	<feature automatic="unselected" name="NL"/>
+	<feature automatic="selected" name="Events"/>
 	<feature name="Flooding"/>
-	<feature name="Thunderstorm"/>
-	<feature name="Earthquake"/>
+	<feature manual="selected" name="Thunderstorm"/>
+	<feature manual="selected" name="Earthquake"/>
 	<feature automatic="selected" name="Notifications"/>
 	<feature name="SMS"/>
 	<feature name="Bluetooth"/>
@@ -19,7 +19,7 @@
 	<feature automatic="unselected" name="Alert_UI"/>
 	<feature automatic="selected" name="Extended_UI"/>
 	<feature manual="selected" name="Dark_theme"/>
-	<feature name="Language"/>
+	<feature manual="selected" name="Language"/>
 	<feature name="English"/>
 	<feature name="Dutch"/>
 	<feature automatic="unselected" name="Server"/>

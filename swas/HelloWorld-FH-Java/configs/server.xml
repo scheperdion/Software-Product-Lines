@@ -2,14 +2,14 @@
 <configuration>
 	<feature automatic="selected" name="SWAS"/>
 	<feature automatic="selected" manual="selected" name="Base"/>
-	<feature name="Location"/>
-	<feature name="UK"/>
-	<feature name="NL"/>
-	<feature name="Events"/>
+	<feature automatic="selected" name="Location"/>
+	<feature manual="selected" name="UK"/>
+	<feature automatic="unselected" name="NL"/>
+	<feature automatic="selected" name="Events"/>
 	<feature name="Flooding"/>
-	<feature name="Thunderstorm"/>
-	<feature name="Earthquake"/>
-	<feature manual="selected" name="Notifications"/>
+	<feature manual="selected" name="Thunderstorm"/>
+	<feature manual="selected" name="Earthquake"/>
+	<feature automatic="selected" manual="selected" name="Notifications"/>
 	<feature name="SMS"/>
 	<feature name="Bluetooth"/>
 	<feature name="Push"/>
@@ -18,7 +18,7 @@
 	<feature automatic="unselected" name="UI"/>
 	<feature automatic="unselected" name="Alert_UI"/>
 	<feature automatic="unselected" name="Extended_UI"/>
-	<feature name="Dark_theme"/>
+	<feature automatic="unselected" name="Dark_theme"/>
 	<feature automatic="unselected" name="Language"/>
 	<feature automatic="unselected" name="English"/>
 	<feature automatic="unselected" name="Dutch"/>

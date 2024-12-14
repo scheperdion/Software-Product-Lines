@@ -38,5 +38,11 @@ public  class  ThunderstormEvent  extends AbstractEvent {
 		return null;
 	}
 
+	
+	
+	public String iconPath() {
+		return "../../Thunderstorm/Thunderstorm.png";
+	}
+
 
 }

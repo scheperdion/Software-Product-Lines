@@ -23,5 +23,11 @@ public  class  NoEvent  extends AbstractEvent {
 		return null;
 	}
 
+	
+	
+	public String iconPath() {
+		return "";
+	}
+
 
 }

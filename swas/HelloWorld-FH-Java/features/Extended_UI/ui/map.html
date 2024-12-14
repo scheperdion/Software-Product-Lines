@@ -19,7 +19,11 @@
 <body>
     <div id="map"></div>
     <script>
-        var map = L.map('map').setView([51.505, -0.09], 13);
+		function createMap(){
+			return L.map('map').setView([51.505, -0.09], 5);
+		}
+		
+        var map = createMap()
 
         // Define tile layers
         var lightMode = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -42,6 +46,32 @@
             currentLayer = currentLayer === lightMode ? darkMode : lightMode;
             currentLayer.addTo(map);
         }
+        
+	    function addCustomMarker(lat, lng, radius, iconUrl) {
+	        // Define a custom icon
+	        var customIcon = L.icon({
+	            iconUrl: iconUrl, //iconUrl, // Path to the custom image
+	            iconSize: [32, 32], // Size of the icon [width, height]
+	            iconAnchor: [16, 16] // Anchor point of the icon (centered)
+	        });
+	
+	        // Add the custom icon to the map
+	        L.marker([lat, lng], { icon: customIcon }).addTo(map);
+			
+	        // Optionally, draw a circle if a radius is provided
+	        if (radius > 0) {
+	            L.circle([lat, lng], {
+	                color: 'blue',
+	                fillColor: '#3399ff',
+	                fillOpacity: 0.3,
+	                radius: radius
+	            }).addTo(map);
+	        }
+	    }
+	    
+	    function setView(lat, lng, zoom){
+			map.setView([lat, lng], zoom);
+		}
     </script>
 </body>
 </html>

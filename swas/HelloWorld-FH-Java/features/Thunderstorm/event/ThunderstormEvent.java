@@ -24,4 +24,8 @@ public class ThunderstormEvent extends AbstractEvent {
 	public EventLocation[] getArea() {
 		return null;
 	}
+	
+	public String iconPath() {
+		return "../../Thunderstorm/Thunderstorm.png";
+	}
 }

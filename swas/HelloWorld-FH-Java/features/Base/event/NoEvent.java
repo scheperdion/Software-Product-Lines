@@ -15,4 +15,8 @@ public class NoEvent extends AbstractEvent {
 	public EventLocation[] getArea() {
 		return null;
 	}
+	
+	public String iconPath() {
+		return "";
+	}
 }

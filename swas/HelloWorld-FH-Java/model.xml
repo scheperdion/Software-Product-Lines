@@ -18,10 +18,10 @@
 	<struct>
 		<and abstract="true" mandatory="true" name="SWAS">
 			<and mandatory="true" name="Base">
-				<or name="Location">
+				<alt abstract="true" mandatory="true" name="Location">
 					<feature name="UK"/>
 					<feature name="NL"/>
-				</or>
+				</alt>
 			</and>
 			<and abstract="true" name="Events">
 				<graphics key="collapsed" value="false"/>
@@ -36,7 +36,7 @@
 			</and>
 			<alt name="Type">
 				<and name="Client">
-					<alt abstract="true" name="UI">
+					<alt abstract="true" mandatory="true" name="UI">
 						<feature name="Alert_UI"/>
 						<and name="Extended_UI">
 							<feature name="Dark_theme"/>
