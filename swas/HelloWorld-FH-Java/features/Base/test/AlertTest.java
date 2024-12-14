@@ -24,7 +24,7 @@ public  class  AlertTest {
 	
 
 	@Test
-	public void test() {
+	public void testAlert() {
 		Alert a = new Alert();
 		assertEquals("Some message", a.toString());
 	}
