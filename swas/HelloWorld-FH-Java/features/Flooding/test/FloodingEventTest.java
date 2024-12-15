@@ -1,6 +1,6 @@
 package test;
 
-import event.EarthquakeEvent;
+import event.FloodingEvent;
 import event.EventLocation;
 import event.ThunderstormEvent;
 
@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import java.time.LocalDateTime;
 
-public class ThunderstormEventTest {
+public class FloodingEventTest {
 
     @Before
     public void setUp() throws Exception {
@@ -25,54 +25,54 @@ public class ThunderstormEventTest {
     }
 
     @Test
-    public void testSingleProvinceThunderstorm() {
-        ThunderstormEvent e = new ThunderstormEvent(
+    public void testSingleProvinceFlooding() {
+        FloodingEvent e = new FloodingEvent(
                 "moderate", "USA", new String[] {"California"},
                 new EventLocation[] { new EventLocation(52, 5, 10.0) });
 
         assertEquals("moderate", e.getSeverity());
-        assertTrue(e.toString().contains("Thunderstorm ALERT moderate"));
-        assertEquals("../../Thunderstorm/Thunderstorm.png", e.iconPath());
+        assertTrue(e.toString().contains("Flooding ALERT moderate"));
+        assertEquals("../../Flooding/Flooding.png", e.iconPath());
     }
 
     @Test
-    public void testMultipleProvincesThunderstorm() {
-        ThunderstormEvent e = new ThunderstormEvent(
+    public void testMultipleProvincesFlooding() {
+    	FloodingEvent e = new FloodingEvent(
                 "severe", "Canada", new String[] {"Ontario", "Quebec"},
                 new EventLocation[] { new EventLocation(52, 5, 10.0) });
 
         assertEquals("severe", e.getSeverity());
-        assertTrue(e.toString().contains("Thunderstorm ALERT severe"));
+        assertTrue(e.toString().contains("Flooding ALERT severe"));
     }
 
     @Test
-    public void testNoProvincesThunderstorm() {
-        ThunderstormEvent e = new ThunderstormEvent(
+    public void testNoProvincesFlooding() {
+    	FloodingEvent e = new FloodingEvent(
                 "low", "Germany", new String[] {},
                 new EventLocation[] { new EventLocation(52, 5, 10.0) });
 
         assertEquals("low", e.getSeverity());
-        assertTrue(e.toString().contains("Thunderstorm ALERT low"));
+        assertTrue(e.toString().contains("Flooding ALERT low"));
     }
 
     @Test
-    public void testNullProvincesThunderstorm() {
-        ThunderstormEvent e = new ThunderstormEvent(
+    public void testNullProvincesFlooding() {
+    	FloodingEvent e = new FloodingEvent(
                 "extreme", "France", null,
                 new EventLocation[] { new EventLocation(52, 5, 10.0) });
 
         assertEquals("extreme", e.getSeverity());
-        assertTrue(e.toString().contains("Thunderstorm ALERT extreme"));
+        assertTrue(e.toString().contains("Flooding ALERT extreme"));
     }
 
     @Test
     public void testDatetimeInitialization() {
-        ThunderstormEvent e = new ThunderstormEvent(
+    	FloodingEvent e = new FloodingEvent(
                 "high", "Australia", new String[] {"New South Wales"},
                 new EventLocation[] { new EventLocation(52, 5, 10.0) });
 
         LocalDateTime now = LocalDateTime.now();
-        assertTrue(e.toString().contains("Thunderstorm ALERT high"));
+        assertTrue(e.toString().contains("Flooding ALERT high"));
         assertTrue(e.toString().contains("high"));
         assertNotNull(e.getSeverity());
         assertTrue(e.toString().contains("high"));
@@ -80,26 +80,26 @@ public class ThunderstormEventTest {
 
     @Test
     public void testSeverityEmpty() {
-        ThunderstormEvent e = new ThunderstormEvent(
+    	FloodingEvent e = new FloodingEvent(
                 "", "Brazil", new String[] {"São Paulo"},
                 new EventLocation[] { new EventLocation(52, 5, 10.0) });
 
         assertEquals("", e.getSeverity());
-        assertTrue(e.toString().contains("Thunderstorm ALERT"));
+        assertTrue(e.toString().contains("Flooding ALERT"));
     }
 
     @Test
     public void testIconPath() {
-        ThunderstormEvent e = new ThunderstormEvent(
+    	FloodingEvent e = new FloodingEvent(
                 "severe", "Japan", new String[] {"Hokkaido"},
                 new EventLocation[] { new EventLocation(52, 5, 10.0) });
 
-        assertEquals("../../Thunderstorm/Thunderstorm.png", e.iconPath());
+        assertEquals("../../Flooding/Flooding.png", e.iconPath());
     }
     
     @Test
     public void testNullLocations() {
-    	ThunderstormEvent e = new ThunderstormEvent(
+    	FloodingEvent e = new FloodingEvent(
                 "high", "Italy", new String[] {"Lazio"}, null);
 
         assertNull(e.getArea());

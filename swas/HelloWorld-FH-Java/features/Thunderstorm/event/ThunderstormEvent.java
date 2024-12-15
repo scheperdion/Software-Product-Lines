@@ -1,28 +1,30 @@
 package event;
 
-import java.time.LocalDateTime;
+import Base.Translation;
 
 public class ThunderstormEvent extends AbstractEvent {
 	private String severity;
-	private LocalDateTime datetime;
 	private String country;
 	private String[] provinces;
+	private EventLocation[] location;
 
-	public ThunderstormEvent(String severity, String country, String[] provinces) {
+	public ThunderstormEvent(String severity, String country, String[] provinces, EventLocation[] location) {
 		this.type = "thunderstorm";
 
 		this.severity = severity;
-		this.datetime = LocalDateTime.now();
 		this.country = country;
 		this.provinces = provinces;
+		this.location = location;
 	}
 
 	public String toString() {
-		return "Thunderstorm ALERT" + " " + this.severity;
+		double lat = location.length > 0 ? location[0].latitude : 0;
+		double lon = location.length > 0 ? location[0].longitude : 0;
+		return Translation.thunderstorm_event_message(this.severity, lat, lon);
 	}
 	
 	public EventLocation[] getArea() {
-		return new EventLocation[] {};
+		return this.location;
 	}
 	
 	public String iconPath() {

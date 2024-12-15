@@ -5,6 +5,12 @@ public class Translation {
 	public static String earthquake_event_message(String severity, double lat, double lon) { 
 		return String.format("earthquake %s, at %f lat and %f long", severity, lat, lon);
 	};
+	public static String thunderstorm_event_message(String severity, double lat, double lon) { 
+		return String.format("thunderstorm %s, at %f lat and %f long", severity, lat, lon);
+	};
+	public static String flooding_event_message(String severity, double lat, double lon) { 
+		return String.format("flooding %s, at %f lat and %f long", severity, lat, lon);
+	};
 	public static String toggle_dark_mode() { return "toggle_dark_mode"; };
 	
 //	public static String flooding_event_message() { return "flooding_event_message"; };

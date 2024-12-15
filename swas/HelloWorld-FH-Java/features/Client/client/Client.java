@@ -34,7 +34,6 @@ public  class  Client  implements Runnable {
 	public void addCallback(IClientCallback callback) {
 		EventDeserializer ed = new EventDeserializer();
 		Gson gson = ed.getGSON();
-		System.out.println(gson.toJson(new ThunderstormEvent("high", "nederland", new String[] {"friesland" })));
 		this.callbacks.add(callback);
 	}
 
