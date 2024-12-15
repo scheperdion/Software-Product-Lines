@@ -2,7 +2,7 @@ package event;
 
 import java.time.LocalDateTime;
 
-import client.Translation;
+import Base.Translation;
 
 public class EarthquakeEvent extends AbstractEvent {
 	private String severity;

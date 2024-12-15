@@ -1,4 +1,4 @@
-package client;
+package Base;
 
 public class Translation {
 	public static String swas_title() { return "Weersextremen Waarschuwer"; };

@@ -35,7 +35,7 @@ public  class  ThunderstormEvent  extends AbstractEvent {
 	
 	
 	public EventLocation[] getArea() {
-		return null;
+		return new EventLocation[] {};
 	}
 
 	
