@@ -16,6 +16,7 @@ import java.util.Scanner;
 import client.*;
 import event.*;
 import client.IClientCallback;
+import client.Translation;
 
 public class UI extends Application implements IClientCallback {
 	private static UI instance;
@@ -39,7 +40,7 @@ public class UI extends Application implements IClientCallback {
 		messageListView.setPrefWidth(400);
 
 		Scene scene = new Scene(root, 400, 600);
-		stage.setTitle("Swas");
+		stage.setTitle(Translation.swas_title());
 		stage.setScene(scene);
 		stage.show();
 	}
