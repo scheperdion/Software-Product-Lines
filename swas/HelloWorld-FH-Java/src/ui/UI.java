@@ -1,23 +1,31 @@
 package ui; 
-
 import javafx.application.Application; 
 import javafx.application.Platform; 
+import javafx.geometry.Insets; 
 import javafx.geometry.Pos; 
 import javafx.scene.Scene; 
-import javafx.scene.control.ListView; 
-import javafx.scene.layout.HBox; 
-import javafx.scene.layout.VBox; 
+import javafx.scene.control.*; 
+import javafx.scene.layout.*; 
 import javafx.scene.text.Text; 
 import javafx.scene.text.TextFlow; 
 import javafx.stage.Stage; 
+import javafx.event.EventHandler; 
+import javafx.scene.web.WebView; 
 
+import java.util.Locale; 
 import java.util.Scanner; 
+import java.io.File; 
 
 import client.*; 
 import event.*; 
-import client.IClientCallback; 
 
-public  class  UI  extends Application  implements IClientCallback {
+import location.Location; 
+
+import client.Translation; 
+import javafx.scene.control.Button; 
+import javafx.scene.layout.VBox; 
+
+public   class  UI  extends Application  implements IClientCallback {
 	
 	private static UI instance;
 
@@ -25,69 +33,125 @@ public  class  UI  extends Application  implements IClientCallback {
 	private ListView<HBox> messageListView;
 
 	
+	WebView map;
+
 	
+
 	public UI() {
 		instance = this;
 	}
 
 	
 	
-	public static UI getInstance() {
-		return instance;
-	}
-
-	
-
-	@Override
-	public void start(Stage stage) {
-		messageListView = new ListView<HBox>();
-		VBox root = new VBox(messageListView);
-		root.setAlignment(Pos.TOP_CENTER);
-		root.setSpacing(10);
-		messageListView.setPrefHeight(600);
-		messageListView.setPrefWidth(400);
-
-		Scene scene = new Scene(root, 400, 600);
-		stage.setTitle("Swas");
-		stage.setScene(scene);
-		stage.show();
-	}
-
-	
-
-	public HBox createMessageBubble(String message, boolean right) {
-		Text messageText = new Text(message);
-		messageText.setWrappingWidth(300);
-
-		HBox messageBox = new HBox();
-		messageBox.setAlignment(right ? Pos.BOTTOM_RIGHT : Pos.BOTTOM_LEFT);
-		messageBox.setSpacing(10);
-
-		TextFlow textFlow = new TextFlow(messageText);
-		textFlow.setStyle("-fx-background-color: " + (right ? "lightblue" : "lightgray") + "; "
-				+ "-fx-background-radius: 15; " + "-fx-padding: 10;");
-
-		messageBox.getChildren().add(textFlow);
-		return messageBox;
+	private void setupMapView(final WebView webView) {
+	    webView.getEngine().getLoadWorker().stateProperty().addListener(
+	        new javafx.beans.value.ChangeListener<javafx.concurrent.Worker.State>() {
+	            @Override
+	            public void changed(javafx.beans.value.ObservableValue<? extends javafx.concurrent.Worker.State> observable, 
+	                                javafx.concurrent.Worker.State oldValue, 
+	                                javafx.concurrent.Worker.State newValue) {
+	                if (newValue == javafx.concurrent.Worker.State.SUCCEEDED) {
+	                    // Execute JavaScript once the map is fully loaded
+	                    Platform.runLater(new Runnable() {
+	                        @Override
+	                        public void run() {
+	                        	String cmd = String.format("setView(%s)", Location.getString());
+	                            webView.getEngine().executeScript(cmd);
+	                        }
+	                    });
+	                }
+	            }
+	        }
+	    );
 	}
 
 	
 	
+    public WebView createMap() {
+        WebView webView = new WebView();
+        File htmlFile = new File("features/Extended_UI/ui/map.html");
+        if (htmlFile.exists()) {
+            webView.getEngine().load(htmlFile.toURI().toString());
+        } else {
+            System.out.println("Map file not found: " + htmlFile.getAbsolutePath());
+        }
+        webView.setPrefSize(400, 400);
+        setupMapView(webView);
+        return webView;
+    }
+
+	
+    
+     private VBox  addUIElements__wrappee__Extended_UI(VBox root) {
+    	this.instance.map = createMap();
+    	root.getChildren().addAll(map);
+    	return root;
+    }
+
+	
+    private VBox addUIElements(VBox root) {
+    	root = addUIElements__wrappee__Extended_UI(root);
+    	WebView map = this.map;
+    	
+        Button darkModeButton = new Button(Translation.toggle_dark_mode());
+        darkModeButton.setOnAction(new EventHandler<javafx.event.ActionEvent>() {
+    	    @Override
+    	    public void handle(javafx.event.ActionEvent event) {
+    	    	map.getEngine().executeScript("toggleDarkMode()");
+    	    }
+    	});
+        root.getChildren().addAll(darkModeButton);
+
+        return root;
+    }
+
+	
+    
+    @Override
+    public void start(Stage stage) {
+        VBox root = new VBox(10);
+        addUIElements(root);
+        root.setPadding(new Insets(10));
+
+        Scene scene = new Scene(root, 400, 500);
+        stage.setTitle(Translation.swas_title());
+        stage.setScene(scene);
+        stage.show();
+    }
+
+	
+    
 	@Override
 	public void receivedEvent(AbstractEvent event) {
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				instance.messageListView.getItems().add(createMessageBubble(event.toString(), false));
+				System.out.println("received event");
+				for(EventLocation location : event.getArea())
+				{
+					String cmd = String.format(Locale.US, "addCustomMarker(%f, %f, %f, \'%s\')", location.latitude, location.longitude, location.radius,event.iconPath());
+					System.out.println(cmd);
+					instance.map.getEngine().executeScript(cmd);
+				}
 			}
 		});
 	}
 
 	
+	
+    public static void go(String[] args) {
+        launch(args);
+    }
 
-	public static void go(String[] args) {
-		launch(args);
-	}
+	
+
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
 
 
 }

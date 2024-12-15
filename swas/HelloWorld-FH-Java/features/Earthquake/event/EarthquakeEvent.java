@@ -2,6 +2,8 @@ package event;
 
 import java.time.LocalDateTime;
 
+import client.Translation;
+
 public class EarthquakeEvent extends AbstractEvent {
 	private String severity;
 	private String country;
@@ -18,11 +20,9 @@ public class EarthquakeEvent extends AbstractEvent {
 	}
 
 	public String toString() {
-		String result = "Earthquake ALERT" + " " + this.severity;
-		if(location.length > 0) {
-			result +=  " severity at " + location[0].latitude + "lat and " + location[0].longitude + "long";
-		}
-		return result;
+		double lat = location.length > 0 ? location[0].latitude : 0;
+		double lon = location.length > 0 ? location[0].longitude : 0;
+		return Translation.earthquake_event_message(this.severity, lat, lon);
 	}
 	
 	public EventLocation[] getArea() {

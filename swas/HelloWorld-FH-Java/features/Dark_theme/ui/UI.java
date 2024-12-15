@@ -1,5 +1,6 @@
 package ui;
 
+import client.Translation;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -10,7 +11,7 @@ public class UI extends Application {
     	root = original(root);
     	WebView map = this.map;
     	
-        Button darkModeButton = new Button("Toggle Dark Mode");
+        Button darkModeButton = new Button(Translation.toggle_dark_mode());
         darkModeButton.setOnAction(new EventHandler<javafx.event.ActionEvent>() {
     	    @Override
     	    public void handle(javafx.event.ActionEvent event) {

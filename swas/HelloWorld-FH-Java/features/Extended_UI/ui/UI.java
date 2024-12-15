@@ -79,7 +79,7 @@ public class UI extends Application implements IClientCallback {
         root.setPadding(new Insets(10));
 
         Scene scene = new Scene(root, 400, 500);
-        stage.setTitle("Swas - Severe Weather Alert System");
+        stage.setTitle(Translation.swas_title());
         stage.setScene(scene);
         stage.show();
     }
