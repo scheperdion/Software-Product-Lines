@@ -4,6 +4,11 @@ public abstract  class  AbstractEvent {
 	String type;
 
 	
+	public String getType() { return type; }
+
+	;
+
+	
 	public abstract String iconPath();
 
 	

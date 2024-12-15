@@ -1,1 +1,3 @@
-{"severity":"extreme","country":"netherlands","provinces":["Noord_Holland","Utrecht"],"location":[{"latitude":52.371807,"longitude":4.896029,"radius":80000.0}],"type":"earthquake"}
+{"severity":"low","country":"netherlands","provinces":["Noord_Holland","Utrecht"],"location":[{"latitude":53.371807,"longitude":4.896029,"radius":150000.0}],"type":"earthquake"}
+{"severity":"highs","datetime":"15::Dec::2024 12::03::53","country":"nederland","provinces":["friesland"], "type":"thunderstorm"}
+{"severity":"extreme","country":"netherlands","provinces":["Noord_Holland","Utrecht"],"location":[{"latitude":51.854620,"longitude":5.849137,"radius":15000.0}],"type":"earthquake"}
