@@ -28,4 +28,8 @@ public class ThunderstormEvent extends AbstractEvent {
 	public String iconPath() {
 		return "../../Thunderstorm/Thunderstorm.png";
 	}
+	
+	public String getSeverity() {
+		return this.severity;
+	}
 }

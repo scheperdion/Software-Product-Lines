@@ -112,23 +112,3 @@ public class UI extends Application implements IClientCallback {
         alert.showAndWait();
     }
 }
-
-
-//Button callFunctionButton = new Button("Add Custom Pin");
-//callFunctionButton.setOnAction(new EventHandler<javafx.event.ActionEvent>() {
-//    @Override
-//    public void handle(javafx.event.ActionEvent event) {
-//        // Example data
-//
-//        double lat = 52.371807d; // Latitude
-//        double lng = 4.896029d; // Longitude
-//        String message = "\"Hello from San Francisco!\"";
-//
-//        // Call the JavaScript function 'addCustomPin'
-//        String cmd = "addCustomPin("+Double.toString(lat)+","+Double.toString(lng) +","+message+")";
-//        System.out.println(cmd);
-//        map.getEngine().executeScript(
-//            cmd
-//        );
-//    }
-//});

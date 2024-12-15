@@ -16,9 +16,11 @@
 	<feature automatic="selected" name="Type"/>
 	<feature automatic="selected" manual="selected" name="Client"/>
 	<feature automatic="selected" name="UI"/>
-	<feature automatic="unselected" name="Alert_UI"/>
-	<feature automatic="selected" name="Extended_UI"/>
-	<feature manual="selected" name="Dark_theme"/>
+	<feature manual="selected" name="Alert_UI"/>
+	<feature automatic="unselected" name="Extended_UI"/>
+	<feature automatic="unselected" name="Dark_theme"/>
+	<feature automatic="unselected" name="Clear"/>
+	<feature automatic="unselected" name="Severity"/>
 	<feature manual="selected" name="Language"/>
 	<feature name="English"/>
 	<feature name="Dutch"/>

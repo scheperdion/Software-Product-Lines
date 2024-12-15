@@ -40,6 +40,8 @@
 						<feature name="Alert_UI"/>
 						<and name="Extended_UI">
 							<feature name="Dark_theme"/>
+							<feature name="Clear"/>
+							<feature name="Severity"/>
 						</and>
 					</alt>
 					<and abstract="true" name="Language">

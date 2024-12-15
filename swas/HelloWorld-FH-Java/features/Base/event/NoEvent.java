@@ -19,4 +19,8 @@ public class NoEvent extends AbstractEvent {
 	public String iconPath() {
 		return "";
 	}
+	
+	public String getSeverity() {
+		return "low";
+	}
 }

@@ -29,5 +29,11 @@ public  class  NoEvent  extends AbstractEvent {
 		return "";
 	}
 
+	
+	
+	public String getSeverity() {
+		return "low";
+	}
+
 
 }

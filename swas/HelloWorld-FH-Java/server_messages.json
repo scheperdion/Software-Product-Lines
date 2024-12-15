@@ -1,1 +1,1 @@
-{"severity":"low","country":"netherlands","provinces":["Noord_Holland","Utrecht"],"location":[{"latitude":53.371807,"longitude":4.896029,"radius":150000.0}],"type":"earthquake"}
+{"severity":"extreme","country":"netherlands","provinces":["Noord_Holland","Utrecht"],"location":[{"latitude":52.371807,"longitude":4.896029,"radius":80000.0}],"type":"earthquake"}

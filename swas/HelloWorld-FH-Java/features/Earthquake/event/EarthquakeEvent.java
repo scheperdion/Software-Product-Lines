@@ -18,7 +18,11 @@ public class EarthquakeEvent extends AbstractEvent {
 	}
 
 	public String toString() {
-		return "Earthquake ALERT" + " " + this.severity + " severity at " + location[0].latitude + "lat and " + location[0].longitude + "long";
+		String result = "Earthquake ALERT" + " " + this.severity;
+		if(location.length > 0) {
+			result +=  " severity at " + location[0].latitude + "lat and " + location[0].longitude + "long";
+		}
+		return result;
 	}
 	
 	public EventLocation[] getArea() {
@@ -27,5 +31,9 @@ public class EarthquakeEvent extends AbstractEvent {
 	
 	public String iconPath() {
 		return "../../Earthquake/Earthquake.png";
+	}
+	
+	public String getSeverity() {
+		return this.severity;
 	}
 }

@@ -25,21 +25,10 @@
 		
         var map = createMap()
 
-        // Define tile layers
-        /*var lightMode = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: 'Map data &copy; OpenStreetMap contributors'
-        });
-
-        var darkMode = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-            maxZoom: 19,
-            attribution: 'Map data &copy; OpenStreetMap contributors, Tiles by CartoDB'
-        });*/
-        
 		var lightMode = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		    maxZoom: 19,
 		    attribution: 'Map data &copy; OpenStreetMap contributors',
-		    language: 'nl' // This is to request Dutch language support for labels
+		    language: 'nl'
 		});
 
 		var darkMode = L.tileLayer('https://{s}.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
@@ -50,10 +39,8 @@
 
 
 
-        // Add default (light) layer
         lightMode.addTo(map);
 
-        // Function to toggle between light and dark mode
         var currentLayer = lightMode;
         function toggleDarkMode() {
             map.removeLayer(currentLayer);
@@ -61,27 +48,79 @@
             currentLayer.addTo(map);
         }
         
-	    function addCustomMarker(lat, lng, radius, iconUrl) {
-	        // Define a custom icon
-	        var customIcon = L.icon({
-	            iconUrl: iconUrl, //iconUrl, // Path to the custom image
-	            iconSize: [32, 32], // Size of the icon [width, height]
-	            iconAnchor: [16, 16] // Anchor point of the icon (centered)
-	        });
-	
-	        // Add the custom icon to the map
-	        L.marker([lat, lng], { icon: customIcon }).addTo(map);
-			
-	        // Optionally, draw a circle if a radius is provided
-	        if (radius > 0) {
-	            L.circle([lat, lng], {
-	                color: 'blue',
-	                fillColor: '#3399ff',
-	                fillOpacity: 0.3,
-	                radius: radius
-	            }).addTo(map);
-	        }
-	    }
+		var markerGroup = L.layerGroup().addTo(map);
+		
+		
+		function addCustomMarker(lat, lng, radius, iconUrl) {
+		    var customIcon = L.icon({
+		        iconUrl: iconUrl,
+		        iconSize: [32, 32],
+		        iconAnchor: [16, 16]
+		    });
+		
+		    var marker = L.marker([lat, lng], { icon: customIcon });
+		    markerGroup.addLayer(marker);
+		
+		   
+		    if (radius > 0) {
+		        var circle = L.circle([lat, lng], {
+		            color: 'blue',
+		            fillColor: '#3399ff',
+		            fillOpacity: 0.3,
+		            radius: radius
+		        });
+		        markerGroup.addLayer(circle);
+		    }
+		}
+		
+		function setSeverityStyle(severity) {
+		    let styles = {
+		        color: '',
+		        fillColor: '',
+		    };
+		
+		    switch (severity.toLowerCase()) {
+		        case 'low':
+		            styles.color = 'green';
+		            styles.fillColor = '#90ee90'; // Light green
+		            break;
+		        case 'moderate':
+		            styles.color = 'yellow';
+		            styles.fillColor = '#ffff99'; // Light yellow
+		            break;
+		        case 'high':
+		            styles.color = 'orange';
+		            styles.fillColor = '#ffcc99'; // Light orange
+		            break;
+		        case 'extreme':
+		            styles.color = 'red';
+		            styles.fillColor = '#ff6666'; // Light red
+		            break;
+		        default:
+		            console.log("Unknown severity level:", severity);
+		            styles.color = 'gray';
+		            styles.fillColor = '#d3d3d3'; // Default to gray
+		            break;
+		    }
+		
+		    return styles;
+		}
+		
+		function recolorLastCircle(severity) {
+		    var layers = markerGroup.getLayers();
+		
+		    for (var i = layers.length - 1; i >= 0; i--) {
+		        if (layers[i] instanceof L.Circle) {
+		            layers[i].setStyle(setSeverityStyle(severity));
+		            return;
+		        }
+		    }
+		    console.log("No circles found in markerGroup!");
+		}
+
+		function removeAllMarkers() {
+		    markerGroup.clearLayers();
+		}
 	    
 	    function setView(lat, lng, zoom){
 			map.setView([lat, lng], zoom);

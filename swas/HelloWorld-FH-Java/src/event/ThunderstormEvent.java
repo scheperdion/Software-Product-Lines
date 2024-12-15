@@ -44,5 +44,11 @@ public  class  ThunderstormEvent  extends AbstractEvent {
 		return "../../Thunderstorm/Thunderstorm.png";
 	}
 
+	
+	
+	public String getSeverity() {
+		return this.severity;
+	}
+
 
 }

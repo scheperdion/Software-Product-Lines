@@ -24,4 +24,8 @@ public class FloodingEvent extends AbstractEvent {
 	public EventLocation getLocation() {
 		return null;
 	}
+	
+	public String getSeverity() {
+		return this.severity;
+	}
 }

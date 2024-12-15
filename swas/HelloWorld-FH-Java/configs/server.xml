@@ -19,6 +19,8 @@
 	<feature automatic="unselected" name="Alert_UI"/>
 	<feature automatic="unselected" name="Extended_UI"/>
 	<feature automatic="unselected" name="Dark_theme"/>
+	<feature automatic="unselected" name="Clear"/>
+	<feature automatic="unselected" name="Severity"/>
 	<feature automatic="unselected" name="Language"/>
 	<feature automatic="unselected" name="English"/>
 	<feature automatic="unselected" name="Dutch"/>
