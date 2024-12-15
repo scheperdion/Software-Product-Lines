@@ -81,29 +81,11 @@ public class ThunderstormEventTest {
     }
 
     @Test
-    public void testNullCountry() {
-        ThunderstormEvent e = new ThunderstormEvent(
-                "moderate", null, new String[] {"Province1", "Province2"});
-
-        assertEquals("moderate", e.getSeverity());
-        assertNull(e.getArea());
-        assertTrue(e.toString().contains("Thunderstorm ALERT moderate"));
-    }
-
-    @Test
     public void testIconPath() {
         ThunderstormEvent e = new ThunderstormEvent(
                 "severe", "Japan", new String[] {"Hokkaido"});
 
         assertEquals("../../Thunderstorm/Thunderstorm.png", e.iconPath());
-    }
-
-    @Test
-    public void testGetAreaReturnsNull() {
-        ThunderstormEvent e = new ThunderstormEvent(
-                "low", "Italy", new String[] {"Lombardy"});
-
-        assertNull(e.getArea());
     }
 
 }

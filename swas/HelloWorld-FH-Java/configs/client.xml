@@ -13,8 +13,8 @@
 	<feature automatic="selected" manual="selected" name="Client"/>
 	<feature automatic="selected" name="UI"/>
 	<feature automatic="unselected" name="Alert_UI"/>
-	<feature manual="selected" name="Extended_UI"/>
-	<feature name="Dark_theme"/>
+	<feature automatic="selected" manual="selected" name="Extended_UI"/>
+	<feature manual="selected" name="Dark_theme"/>
 	<feature name="Clear"/>
 	<feature name="Severity"/>
 	<feature automatic="selected" manual="selected" name="Language"/>
